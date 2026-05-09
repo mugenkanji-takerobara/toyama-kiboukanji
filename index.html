@@ -122,6 +122,23 @@
   border-radius: 10px;
   font-weight: bold;
 }
+.screen,
+#manualOverlay,
+#toyamaScreen,
+#tateyamaDetailScreen,
+#cityHallDetailScreen,
+#amaharashiDetailScreen {
+  display: none !important;
+  pointer-events: none !important;
+}
+#menu-buttons {
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+#menu-buttons button {
+  padding: 18px 8px; /* ←縦を1.9倍にして揃える */
+  font-size: 1.1rem;
+}
   </style>
 </head>
 <body>
