@@ -49,6 +49,37 @@
 #toyamaScreen {
   display: none !important;
 }
+#toyamaScreen,
+#tateyamaDetailScreen,
+#cityHallDetailScreen,
+#amaharashiDetailScreen,
+#manualOverlay {
+  display: none !important;
+  pointer-events: none !important;
+}
+#title-screen {
+  position: relative;
+  z-index: 1;
+}
+
+#menu-buttons {
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+}
+
+.screen {
+  pointer-events: none !important;
+}
+#menu-buttons button {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 18px 10px;  /* ←縦2.5倍 */
+  background: linear-gradient(#ffd700, #c9a200); /* ゴールド */
+  color: #000;
+  border: 2px solid #b38b00;
+  border-radius: 8px;
+  font-weight: bold;
+}
   </style>
 </head>
 <body>
