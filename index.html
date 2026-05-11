@@ -348,8 +348,8 @@
       ・左右スワイプで移動<br>
       ・下スワイプで加速<br>
       ・縦か横に3つそろえると消える<br>
-      ・ボーナス漢字「塩」「代」が出ることがある<br>
-      ・スコアで季節が変わる
+      ・ボーナス漢字「塩」「代」がある<br>
+      ・100点毎に季節が変わる
     </p>
 
     <div class="back-title">
@@ -981,10 +981,10 @@ function draw(){
     ctx.fillText('ボーナス発動！ ['+bonusMode+']', 40, 295);
     ctx.font = '16px sans-serif';
     if(bonusMode==="塩"){
-      ctx.fillText('消したいマスをタップ！！！', 40, 325);
-      ctx.fillText('のこり '+bonusRemaining+' マス', 80, 350);
+      ctx.fillText('消したい漢字をタップ！！！', 40, 325);
+      ctx.fillText('のこり '+bonusRemaining+' 漢字', 80, 350);
     }else if(bonusMode==="代"){
-      ctx.fillText('入れ替えたいマスをタップ！！！', 40, 325);
+      ctx.fillText('入れ替えたい漢字をタップ！！！', 40, 325);
       ctx.fillText('のこり '+bonusRemaining+' 回', 80, 350);   
   }
 }
@@ -1280,7 +1280,7 @@ function handleBonusTap(t){
   // --- 塩 ---
   if(bonusMode === "塩"){
     if(board[row][col]){
-      if(confirm("このマスを消していいですか？")){
+      if(confirm("この漢字を消していいですか？")){
         board[row][col] = null;
         bonusRemaining--;
         const result = clearMatchesAndBonus();
@@ -1769,8 +1769,8 @@ Fin`,
 
     <h3>操作方法</h3>
     <ul>
-      <li>左右スワイプ：マスを左右に移動。</li>
-      <li>下スワイプ：マスを素早く落とす。</li>
+      <li>左右スワイプ：漢字を左右に移動。</li>
+      <li>下スワイプ：漢字を素早く落とす。</li>
       <li>一時停止 ||：ゲームを中断。</li>
       <li>メイン：タイトル画面にもどる。</li>
     </ul>
@@ -1783,8 +1783,8 @@ Fin`,
 
     <h3>ボーナス漢字</h3>
     <ul>
-      <li>岳：指定したマスを消す。</li>
-      <li>代：2つのマスを入れ替え。</li>
+      <li>岳：指定した漢字を消す。</li>
+      <li>代：2つの漢字を入れ替え。</li>
     </ul>
 
     <h3>記録</h3>
