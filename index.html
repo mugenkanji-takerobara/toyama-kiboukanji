@@ -14,28 +14,6 @@
   position: relative;
   overflow: hidden;
 }
-
-/* 右下の4ボタン（縦並び・小さめ） */
-#menu-buttons {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 25%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  z-index: 9999;
-}
-
-#menu-buttons button {
-  font-size: 0.8rem;
-  padding: 6px 10px;
-  background: rgba(255,255,255,0.85);
-  border: 1px solid #444;
-  border-radius: 4px;
-}
-
-/* 古い3ボタンは完全に消す */
 .title-main-btn {
   display: none !important;
 }
@@ -61,46 +39,12 @@
   position: relative;
   z-index: 1;
 }
-
-#menu-buttons {
-  z-index: 99999 !important;
-  pointer-events: auto !important;
-}
-
 .screen {
   pointer-events: none !important;
-}
-#menu-buttons button {
-  width: 100%;
-  font-size: 1.2rem;
-  padding: 18px 10px;  /* ←縦2.5倍 */
-  background: linear-gradient(#ffd700, #c9a200); /* ゴールド */
-  color: #000;
-  border: 2px solid #b38b00;
-  border-radius: 8px;
-  font-weight: bold;
 }
 .screen {
   display: none !important;
   pointer-events: none !important;
-}
-#menu-buttons {
-  z-index: 999999 !important;
-  pointer-events: auto !important;
-}
-#menu-buttons {
-  width: 12%;
-}
-
-#menu-buttons button {
-  width: 100%;
-  font-size: 1.2rem;
-  padding: 14px 8px; /* ←縦2倍 */
-  background: linear-gradient(#ff4d4d, #b30000); /* 赤系 */
-  color: #fff;
-  border: 2px solid #800000;
-  border-radius: 10px;
-  font-weight: bold;
 }
 .screen,
 #manualOverlay,
@@ -111,17 +55,6 @@
   display: none !important;
   pointer-events: none !important;
 }
-#menu-buttons button {
-  padding: 16px 8px; /* ←縦を1.8倍に */
-  font-size: 1.1rem;
-}
-#menu-buttons button {
-  background: linear-gradient(#ffd700, #b8860b); /* ゴールド */
-  color: #fff; /* 白文字 */
-  border: 2px solid #8b6508;
-  border-radius: 10px;
-  font-weight: bold;
-}
 .screen,
 #manualOverlay,
 #toyamaScreen,
@@ -130,37 +63,11 @@
 #amaharashiDetailScreen {
   display: none !important;
   pointer-events: none !important;
-}
-#menu-buttons {
-  z-index: 999999 !important;
-  pointer-events: auto !important;
-}
-#menu-buttons button {
-  padding: 18px 8px; /* ←縦を1.9倍にして揃える */
-  font-size: 1.1rem;
-}
-#menu-buttons button {
-  background: linear-gradient(#e6b800, #8a6f00); /* 濃いゴールド */
-  color: #fff; /* 白文字で視認性UP */
-  border: 2px solid #5c4a00;
-  border-radius: 10px;
-  font-weight: bold;
 }
 #manualOverlay {
   display: none !important;
   pointer-events: none !important;
   opacity: 0 !important;
-}
-#menu-buttons button {
-  padding: 18px 10px; /* ←縦1.9倍で統一 */
-  font-size: 1.2rem;
-}
-#menu-buttons button {
-  background: linear-gradient(#d4a017, #8a6f00); /* 濃い金属ゴールド */
-  color: #fff; /* 白文字で視認性UP */
-  border: 2px solid #5c4a00;
-  border-radius: 10px;
-  font-weight: bold;
 }
 #gameScreen {
   z-index: -1 !important;
@@ -178,8 +85,27 @@
   pointer-events: none !important;
 }
 #title-screen,
-#menu-buttons,
+#menu-buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 12%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+
 #menu-buttons button {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 18px 10px; /* ←縦1.9倍で統一 */
+  background: linear-gradient(#d4a017, #8a6f00); /* 濃い金属ゴールド */
+  color: #fff;
+  border: 2px solid #5c4a00;
+  border-radius: 10px;
+  font-weight: bold;
   pointer-events: auto !important;
 }
 </style>
