@@ -348,7 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen("gameScreen");
   });
 
-  document.getElementById("btnHowTo").addEventListener("click", () => {
+  document.getElementById("btn-howto").addEventListener("click", () => {
     showScreen("manualOverlay");
   });
 
@@ -418,13 +418,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (currentLang === "jp") {
       document.getElementById("btn-start").textContent = "Start Game";
-      document.getElementById("btnHowTo").textContent = "How to Play";
+      document.getElementById("btn-howto").textContent = "How to Play";
       document.getElementById("toyamaBtn").textContent = "Toyama";
       currentLang = "en";
 
     } else {
       document.getElementById("btn-start").textContent = "ゲームスタート";
-      document.getElementById("btnHowTo").textContent = "使い方";
+      document.getElementById("btn-howto").textContent = "使い方";
       document.getElementById("toyamaBtn").textContent = "とやま";
       currentLang = "jp";
     }
@@ -443,7 +443,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
       "Infinite Stories of Hope Written in Every Character";
 
     document.getElementById("btn-start").textContent = "Start Game";
-    document.getElementById("btnHowTo").textContent = "How to Play";
+    document.getElementById("btn-howto").textContent = "How to Play";
     document.getElementById("toyamaBtn").textContent = "Toyama";
 
     currentLang = "en";
@@ -457,7 +457,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
       "とやまの無限漢字 〜立山連峰から日本海まで希望の数え唄〜";
 
     document.getElementById("btn-start").textContent = "ゲームスタート";
-    document.getElementById("btnHowTo").textContent = "使い方";
+    document.getElementById("btn-howto").textContent = "使い方";
     document.getElementById("toyamaBtn").textContent = "とやま";
 
     currentLang = "jp";
@@ -477,7 +477,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
       "Infinite Stories of Hope Written in Every Character";
 
     document.getElementById("btn-start").textContent = "Start Game";
-    document.getElementById("btnHowTo").textContent = "How to Play";
+    document.getElementById("btn-howto").textContent = "How to Play";
     document.getElementById("toyamaBtn").textContent = "Toyama";
 
     currentLang = "en";
@@ -491,7 +491,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
       "とやまの無限漢字 〜立山連峰から日本海まで、希望の数え唄〜";
 
     document.getElementById("btn-start").textContent = "ゲームスタート";
-    document.getElementById("btnHowTo").textContent = "使い方";
+    document.getElementById("btn-howto").textContent = "使い方";
     document.getElementById("toyamaBtn").textContent = "とやま";
 
     currentLang = "jp";
@@ -1360,7 +1360,7 @@ document.getElementById("btn-start").addEventListener("click", ()=>{
   gameScreen.style.display = "block";
 });
 
-document.getElementById("btnHowTo").addEventListener("click", ()=>{
+document.getElementById("btn-howto").addEventListener("click", ()=>{
   manualOverlay.classList.remove("hidden");
 });
 
