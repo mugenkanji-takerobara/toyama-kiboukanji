@@ -1335,7 +1335,7 @@ mainBtn.addEventListener("click", ()=>{
   restartGame();
   stopAllBGM();
   document.getElementById("gameScreen").style.display = "none";
-  document.getElementById("titleScreen").style.display = "flex";
+  document.getElementById("title-screen").style.display = "flex";
 });
 
 // 説明書の開閉
@@ -1350,13 +1350,13 @@ manualOverlay.addEventListener("click",(e)=>{
 /* =========================
    タイトル画面 → 各画面遷移
    ========================= */
-const titleScreen = document.getElementById("titleScreen");
+const "title-screen" = document.getElementById("title-screen");
 const gameScreen  = document.getElementById("gameScreen");
 const toyamaScreen = document.getElementById("toyamaScreen");
 const storyScreen = document.getElementById("storyScreen");
 
 document.getElementById("btnStartGame").addEventListener("click", ()=>{
-  titleScreen.style.display = "none";
+  title-screen.style.display = "none";
   gameScreen.style.display = "block";
 });
 
@@ -1365,7 +1365,7 @@ document.getElementById("btnHowTo").addEventListener("click", ()=>{
 });
 
 document.getElementById("toyamaBtn").addEventListener("click", ()=>{
-  titleScreen.style.display = "none";
+  title-screen.style.display = "none";
   toyamaScreen.style.display = "block";
 });
 /* =========================
@@ -1373,7 +1373,7 @@ document.getElementById("toyamaBtn").addEventListener("click", ()=>{
    ========================= */
 document.getElementById("backFromToyama").addEventListener("click", ()=>{
   toyamaScreen.style.display = "none";
-  titleScreen.style.display = "flex";
+  title-screen.style.display = "flex";
 });
 
 document.getElementById("amaharashiBtn").addEventListener("click", ()=>{
