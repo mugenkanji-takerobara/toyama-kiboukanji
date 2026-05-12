@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+🟣 次の一手（やることは1つだけ）
+✔ .hidden { の中に入ってしまった HTML を全部削除
+✔ .hidden { display:none; } だけ残す
+🟢 次のステップ
+削除したら 「直した」 と送って。
+そこから画面が戻るか最終チェックに進む。
+
+</style> が無い　何をするか冷静に進めたい
+自分の思考を見る
+いい、ここはいったん落ち着いて「ここからここまで全部入れ替える」方式にしよう。
+理由は抜きで、「このブロックを丸ごとコピペ」で直せる形にするね。
+
+✅ やることは 1つだけ
+今の #title-screen から <body> までを、いったん全部消して、
+下のコードに “丸ごと入れ替え” してください。
+
+html
 <style>
 /* タイトル画面（背景＋右下4ボタンだけ） */
 #title-screen {
@@ -14,17 +31,16 @@
   position: relative;
   overflow: hidden;
 }
+
 .title-main-btn {
   display: none !important;
 }
-#title-screen {
-  position: relative;
-  z-index: 1;
-}
+
 #title-screen {
   z-index: 999999 !important;
   pointer-events: auto !important;
 }
+
 #menu-buttons {
   position: absolute;
   bottom: 10px;
@@ -40,24 +56,24 @@
 #menu-buttons button {
   width: 100%;
   font-size: 1.2rem;
-  padding: 18px 10px; /* ←縦1.9倍で統一 */
-  background: linear-gradient(#d4a017, #8a6f00); /* 濃い金属ゴールド */
+  padding: 18px 10px;
+  background: linear-gradient(#d4a017, #8a6f00);
   color: #fff;
   border: 2px solid #5c4a00;
   border-radius: 10px;
   font-weight: bold;
   pointer-events: auto !important;
 }
+
+/* 画面の表示・非表示に使うクラス */
 .hidden {
   display: none;
 }
-#wrap {
-  pointer-events: none !important;
-}
-.screen-inner {
-  pointer-events: none !important;
-}
-.hidden {
+</style>
+</head>
+<body>
+
+<div id="bonusDialog" style="display:none;">
   <div class="bonus-dialog-inner">
     <div class="bonus-dialog-title" id="bonusDialogTitle">ボーナス</div>
     <div class="bonus-dialog-text" id="bonusDialogText">
@@ -69,6 +85,7 @@
     </div>
   </div>
 </div>
+
 <!-- タイトル画面 -->
 <div id="title-screen">
   <div id="menu-buttons">
@@ -79,7 +96,7 @@
   </div>
 </div>
 
-<!-- ゲーム画面（ここに全部入れる） -->
+<!-- ゲーム画面 -->
 <div id="gameScreen" class="hidden">
   <div class="screen-inner">
     <div id="wrap">
@@ -107,7 +124,6 @@
     </div>
   </div>
 </div>
-
 <div id="toyamaScreen" class="hidden">
   <div class="screen-inner">
     <h1 class="toyama-title">とやま</h1>
