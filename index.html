@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen("manualOverlay");
   });
 
-  document.getElementById("toyamaBtn").addEventListener("click", () => {
+  document.getElementById("btn-toyama").addEventListener("click", () => {
     showScreen("toyamaScreen");
   });
 
@@ -419,13 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentLang === "jp") {
       document.getElementById("btn-start").textContent = "Start Game";
       document.getElementById("btn-howto").textContent = "How to Play";
-      document.getElementById("toyamaBtn").textContent = "Toyama";
+      document.getElementById("btn-toyama").textContent = "Toyama";
       currentLang = "en";
 
     } else {
       document.getElementById("btn-start").textContent = "ゲームスタート";
       document.getElementById("btn-howto").textContent = "使い方";
-      document.getElementById("toyamaBtn").textContent = "とやま";
+      document.getElementById("btn-toyama").textContent = "とやま";
       currentLang = "jp";
     }
   });
@@ -444,7 +444,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
 
     document.getElementById("btn-start").textContent = "Start Game";
     document.getElementById("btn-howto").textContent = "How to Play";
-    document.getElementById("toyamaBtn").textContent = "Toyama";
+    document.getElementById("btn-toyama").textContent = "Toyama";
 
     currentLang = "en";
 
@@ -458,7 +458,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
 
     document.getElementById("btn-start").textContent = "ゲームスタート";
     document.getElementById("btn-howto").textContent = "使い方";
-    document.getElementById("toyamaBtn").textContent = "とやま";
+    document.getElementById("btn-toyama").textContent = "とやま";
 
     currentLang = "jp";
   }
@@ -478,7 +478,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
 
     document.getElementById("btn-start").textContent = "Start Game";
     document.getElementById("btn-howto").textContent = "How to Play";
-    document.getElementById("toyamaBtn").textContent = "Toyama";
+    document.getElementById("btn-toyama").textContent = "Toyama";
 
     currentLang = "en";
 
@@ -492,7 +492,7 @@ document.getElementById("btnLang").addEventListener("click", () => {
 
     document.getElementById("btn-start").textContent = "ゲームスタート";
     document.getElementById("btn-howto").textContent = "使い方";
-    document.getElementById("toyamaBtn").textContent = "とやま";
+    document.getElementById("btn-toyama").textContent = "とやま";
 
     currentLang = "jp";
   }
@@ -1364,7 +1364,7 @@ document.getElementById("btn-howto").addEventListener("click", ()=>{
   manualOverlay.classList.remove("hidden");
 });
 
-document.getElementById("toyamaBtn").addEventListener("click", ()=>{
+document.getElementById("btn-toyama").addEventListener("click", ()=>{
   title-screen.style.display = "none";
   toyamaScreen.style.display = "block";
 });
