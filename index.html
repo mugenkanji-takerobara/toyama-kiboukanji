@@ -130,19 +130,19 @@
 </div>
 <!-- タイトル画面 -->
 <div id="title-screen">
-
   <div id="menu-buttons">
     <button id="btn-start">ｹﾞｰﾑｽﾀｰﾄ</button>
     <button id="btn-howto">使いかた</button>
     <button id="btn-toyama">とやま</button>
     <button id="lang-switch">日本語 / English</button>
   </div>
-
 </div>
-<!-- ゲーム画面 -->
+
+<!-- ゲーム画面（ここに全部入れる） -->
 <div id="gameScreen" class="hidden">
   <div class="screen-inner">
     <div id="wrap">
+
       <canvas id="c" width="360" height="640"></canvas>
 
       <div id="gameControlButtons">
@@ -157,10 +157,12 @@
         <button id="restartBtn" onclick="restartGame()" style="display:none;">もう一度</button>
         <button id="manualBtn">操作方法</button>
       </div>
+
       <div id="info">
         左右スワイプで移動、下スワイプで加速！<br>
         縦か横に3つそろえると消えるよ。
       </div>
+
     </div>
   </div>
 </div>
