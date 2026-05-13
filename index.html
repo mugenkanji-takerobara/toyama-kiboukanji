@@ -381,7 +381,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen("toyamaScreen");
   });
 
-  // ← ここから追加3つ
   document.getElementById("manualCloseBtn").addEventListener("click", () => {
     showScreen("title-screen");
   });
@@ -416,32 +415,10 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen("title-screen");
   });
 
- /* ★★★ 日本語⇔英語切替（タイトル＋サブタイトル＋ボタン3つ） ★★★ */
-let currentLang = "jp";
-
-document.getElementById("lang-switch").addEventListener("click", () => {
-
-  if (currentLang === "jp") {
-    // 英語に切り替え
-    document.getElementById("titleVertical").textContent =
-      "KIBOUKANJI — Where Every Character Carries Hope";
-
-    document.getElementById("subtitle").textContent =
-      "Infinite Stories of Hope Written in Every Character";
-
-    document.getElementById("btn-start").textContent = "Start Game";
-    document.getElementById("btn-howto").textContent = "How to Play";
-    document.getElementById("btn-toyama").textContent = "Toyama";
-
-    currentLang = "en";
-　document.addEventListener("DOMContentLoaded", () => {
-
-  // ここにイベント登録が全部入る
-
-  /* ★ 言語切替ボタン（2個目のscriptの中身） ★ */
+  /* ★ 言語切替（2個目のscriptの中身をここへ） ★ */
   let currentLang = "jp";
 
-  　document.getElementById("lang-switch").addEventListener("click", () => {
+  document.getElementById("lang-switch").addEventListener("click", () => {
     if (currentLang === "jp") {
       document.getElementById("lang-switch").textContent = "English / 日本語";
       currentLang = "en";
@@ -451,24 +428,7 @@ document.getElementById("lang-switch").addEventListener("click", () => {
     }
   });
 
-}); // ← ここで閉じる
-
-  } else {
-    // 日本語に戻す
-    document.getElementById("titleVertical").textContent = "きぼうかんじ";
-
-    document.getElementById("subtitle").textContent =
-      "とやまの無限漢字 〜立山連峰から日本海まで希望の数え唄〜";
-
-    document.getElementById("btn-start").textContent = "ゲームスタート";
-    document.getElementById("btn-howto").textContent = "使い方";
-    document.getElementById("btn-toyama").textContent = "とやま";
-
-    currentLang = "jp";
-  }
-});
-});
-}); // ← これが DOMContentLoaded の終わり
+}); // ← これが唯一の DOMContentLoaded の終わり
 /* =========================
    きぼうかんじ ゲーム本体
    ========================= */
