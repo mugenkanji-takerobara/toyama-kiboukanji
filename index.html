@@ -855,8 +855,7 @@ function draw(){
   if(isPaused && !gameOver && started){
     drawPauseOverlay();
   }
-
-    if(bonusMode){
+  if(bonusMode){
     ctx.fillStyle = 'rgba(0,0,0,0.6)';
     ctx.fillRect(20,260,320,140);
     ctx.fillStyle = 'white';
@@ -874,8 +873,8 @@ function draw(){
       ctx.fillText('入れ替えたい漢字をタップ！！！', 40, 325);
       ctx.fillText('のこり '+bonusRemaining+' 回', 80, 350);
     }
-  } // ← これが必要
-}   // ← draw() の終わり
+  }   // ← if(bonusMode) の閉じ
+}     // ← draw() の閉じ
 
 function resetBoard(){
   board = Array.from({length:ROWS},()=>Array(COLS).fill(null));
