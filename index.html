@@ -416,25 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen("title-screen");
   });
 
-  /* ★★★ 日本語⇔英語切替（ここに追加） ★★★ */
-  let currentLang = "jp";
-
-  document.getElementById("lang-switch").addEventListener("click", () => {
-
-    if (currentLang === "jp") {
-      document.getElementById("btn-start").textContent = "Start Game";
-      document.getElementById("btn-howto").textContent = "How to Play";
-      document.getElementById("btn-toyama").textContent = "Toyama";
-      currentLang = "en";
-
-    } else {
-      document.getElementById("btn-start").textContent = "ゲームスタート";
-      document.getElementById("btn-howto").textContent = "使い方";
-      document.getElementById("btn-toyama").textContent = "とやま";
-      currentLang = "jp";
-    }
-  });
-/* ★★★ 日本語⇔英語切替（タイトル＋サブタイトル＋ボタン3つ） ★★★ */
+ /* ★★★ 日本語⇔英語切替（タイトル＋サブタイトル＋ボタン3つ） ★★★ */
 let currentLang = "jp";
 
 document.getElementById("lang-switch").addEventListener("click", () => {
@@ -455,8 +437,7 @@ document.getElementById("lang-switch").addEventListener("click", () => {
 
   } else {
     // 日本語に戻す
-    document.getElementById("titleVertical").textContent =
-      "きぼうかんじ";
+    document.getElementById("titleVertical").textContent = "きぼうかんじ";
 
     document.getElementById("subtitle").textContent =
       "とやまの無限漢字 〜立山連峰から日本海まで希望の数え唄〜";
@@ -468,26 +449,6 @@ document.getElementById("lang-switch").addEventListener("click", () => {
     currentLang = "jp";
   }
 });
-/* ★★★ 日本語⇔英語切替（タイトル＋サブタイトル＋ボタン3つ） ★★★ */
-let currentLang = "jp";
-
-document.getElementById("lang-switch").addEventListener("click", () => {
-
-  if (currentLang === "jp") {
-    // 英語に切り替え
-    document.getElementById("titleVertical").textContent =
-      "KIBOUKANJI — Where Every Character Carries Hope";
-
-    document.getElementById("subtitle").textContent =
-      "Infinite Stories of Hope Written in Every Character";
-
-    document.getElementById("btn-start").textContent = "Start Game";
-    document.getElementById("btn-howto").textContent = "How to Play";
-    document.getElementById("btn-toyama").textContent = "Toyama";
-
-    currentLang = "en";
-
-  } else {
     // 日本語に戻す
     document.getElementById("titleVertical").textContent =
       "きぼうかんじ";
