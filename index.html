@@ -434,6 +434,24 @@ document.getElementById("lang-switch").addEventListener("click", () => {
     document.getElementById("btn-toyama").textContent = "Toyama";
 
     currentLang = "en";
+　document.addEventListener("DOMContentLoaded", () => {
+
+  // ここにイベント登録が全部入る
+
+  /* ★ 言語切替ボタン（2個目のscriptの中身） ★ */
+  let currentLang = "jp";
+
+  　document.getElementById("lang-switch").addEventListener("click", () => {
+    if (currentLang === "jp") {
+      document.getElementById("lang-switch").textContent = "English / 日本語";
+      currentLang = "en";
+    } else {
+      document.getElementById("lang-switch").textContent = "日本語 / English";
+      currentLang = "jp";
+    }
+  });
+
+}); // ← ここで閉じる
 
   } else {
     // 日本語に戻す
@@ -449,19 +467,6 @@ document.getElementById("lang-switch").addEventListener("click", () => {
     currentLang = "jp";
   }
 });
-    // 日本語に戻す
-    document.getElementById("titleVertical").textContent =
-      "きぼうかんじ";
-
-    document.getElementById("subtitle").textContent =
-      "とやまの無限漢字 〜立山連峰から日本海まで、希望の数え唄〜";
-
-    document.getElementById("btn-start").textContent = "ゲームスタート";
-    document.getElementById("btn-howto").textContent = "使い方";
-    document.getElementById("btn-toyama").textContent = "とやま";
-
-    currentLang = "jp";
-  }
 });
 }); // ← これが DOMContentLoaded の終わり
 /* =========================
