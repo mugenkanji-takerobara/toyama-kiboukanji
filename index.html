@@ -1126,8 +1126,8 @@ function handleBonusTap(t){
 
   if(col<0 || col>=COLS || row<0 || row>=ROWS) return;
 
-  // --- 塩 ---
-  if(bonusMode === "塩"){
+  // --- 岳 ---
+  if(bonusMode === "岳"){
     if(board[row][col]){
       if(confirm("この漢字を消していいですか？")){
         board[row][col] = null;
