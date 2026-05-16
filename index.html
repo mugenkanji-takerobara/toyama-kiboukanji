@@ -283,6 +283,18 @@
   </div>
 </div>
 </script>
+function showScreen(id){
+  const screens = [
+    "title-screen",
+    "gameScreen",
+    "toyamaScreen",
+    "manualOverlay",
+    "tateyamaDetailScreen",
+    "cityHallDetailScreen",
+    "amaharashiDetailScreen",
+    "storyScreen"
+  ];
+
 <div id="manualOverlay" class="hidden">
   <div class="screen-inner">
     <h1>使い方</h1>
@@ -320,17 +332,6 @@
     </div>
   </div>
 </div>
-function showScreen(id){
-  const screens = [
-    "title-screen",
-    "gameScreen",
-    "toyamaScreen",
-    "manualOverlay",
-    "tateyamaDetailScreen",
-    "cityHallDetailScreen",
-    "amaharashiDetailScreen",
-    "storyScreen"
-  ];
 
   screens.forEach(s => {
     const el = document.getElementById(s);
