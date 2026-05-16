@@ -282,7 +282,8 @@
     </div>
   </div>
 </div>
-</script>
+<script>
+
 function showScreen(id){
   const screens = [
     "title-screen",
@@ -294,44 +295,6 @@ function showScreen(id){
     "amaharashiDetailScreen",
     "storyScreen"
   ];
-
-<div id="manualOverlay" class="hidden">
-  <div class="screen-inner">
-    <h1>使い方</h1>
-
-    <p class="manual-text">
-      ・左右スワイプで移動<br>
-      ・下スワイプで加速<br>
-      ・縦か横に3つそろえると消える<br>
-      ・ボーナス漢字「塩」「代」がある<br>
-      ・100点毎に季節が変わる
-    </p>
-
-    <div class="back-title">
-      <button id="manualCloseBtn" class="nav-btn">メインにもどる</button>
-    </div>
-  </div>
-</div>
-<!-- 物語画面 -->
-<div id="storyScreen" class="hidden">
-  <div class="story-inner">
-    <div class="lang-buttons">
-      <button id="btnJP" class="lang-btn active">日本語</button>
-      <button id="btnEN" class="lang-btn">English</button>
-    </div>
-    <h2 id="storyTitle"></h2>
-    <div id="storyTextJP" class="story-text"></div>
-    <div id="storyTextEN" class="story-text" style="display:none;"></div>
-
-    <div class="story-nav">
-      <button id="prevBtn">もどる</button>
-      <button id="nextBtn">つぎへ</button>
-    </div>
-    <div class="back-title">
-      <button id="backToTitle" class="nav-btn">メインにもどる</button>
-    </div>
-  </div>
-</div>
 
   screens.forEach(s => {
     const el = document.getElementById(s);
@@ -356,20 +319,120 @@ function showBonusDialog(message, callback) {
     cancelBtn.onclick = null;
   };
 
-  okBtn.onclick = () => {
-    close();
-    callback(true);
-  };
-
-  cancelBtn.onclick = () => {
-    close();
-    callback(false);
-  };
+  okBtn.onclick = () => { close(); callback(true); };
+  cancelBtn.onclick = () => { close(); callback(false); };
 
   dialog.style.display = "flex";
 }
+
 document.addEventListener("DOMContentLoaded", () => {
- 
+
+  showScreen("title-screen");
+
+  document.getElementById("btn-start").addEventListener("click", () => {
+    showScreen("gameScreen");
+  });
+
+  document.getElementById("btn-howto").addEventListener("click", () => {
+    showScreen("manualOverlay");
+  });
+
+  document.getElementById("btn-toyama").addEventListener("click", () => {
+    showScreen("toyamaScreen");
+  });
+
+  document.getElementById("tateyamaMuseumBtn").addEventListener("click", () => {
+    showScreen("tateyamaDetailScreen");
+  });
+
+  document.getElementById("cityHallBtn").addEventListener("click", () => {
+    showScreen("cityHallDetailScreen");
+  });
+
+  document.getElementById("backFromToyama").addEventListener("click", () => {
+    showScreen("title-screen");
+  });
+
+  document.getElementById("backFromTateyama").addEventListener("click", () => {
+    showScreen("toyamaScreen");
+  });
+
+  document.getElementById("backFromCityHall").addEventListener("click", () => {
+    showScreen("toyamaScreen");
+  });
+
+  document.getElementById("manualCloseBtn").addEventListener("click", () => {
+    showScreen("title-screen");
+  });
+
+  document.getElementById("amaharashiSpot").addEventListener("click", () => {
+    showScreen("amaharashiDetailScreen");
+  });
+
+  document.getElementById("backFromAmaharashi").addEventListener("click", () => {
+    showScreen("toyamaScreen");
+  });
+
+  document.getElementById("btnJP").addEventListener("click", () => {
+    document.getElementById("storyTextJP").style.display = "block";
+    document.getElementById("storyTextEN").style.display = "none";
+  });
+
+  document.getElementById("btnEN").addEventListener("click", () => {
+    document.getElementById("storyTextJP").style.display = "none";
+    document.getElementById("storyTextEN").style.display = "block";
+  });
+
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    showPrevStory();
+  });
+
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    showNextStory();
+  });
+
+  document.getElementById("backToTitle").addEventListener("click", () => {
+    showScreen("title-screen");
+  });
+
+  let currentLang = "jp";
+
+  document.getElementById("lang-switch").addEventListener("click", () => {
+    if (currentLang === "jp") {
+      document.getElementById("lang-switch").textContent = "English / 日本語";
+      currentLang = "en";
+    } else {
+      document.getElementById("lang-switch").textContent = "日本語 / English";
+      currentLang = "jp";
+    }
+  });
+
+});  /* ← DOMContentLoaded の終わり */
+
+</script>
+
+function showScreen(id){
+  const screens = [
+    "title-screen",
+    "gameScreen",
+    "toyamaScreen",
+    "manualOverlay",
+    "tateyamaDetailScreen",
+    "cityHallDetailScreen",
+    "amaharashiDetailScreen",
+    "storyScreen"
+  ];
+
+  screens.forEach(s => {
+    const el = document.getElementById(s);
+    if (el) el.style.display = "none";
+  });
+
+  const target = document.getElementById(id);
+  if (target) target.style.display = "flex";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   showScreen("title-screen");
 
   document.getElementById("btn-start").addEventListener("click", () => {
