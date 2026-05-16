@@ -61,6 +61,30 @@
   position: relative;
   z-index: 1;
 }
+/* hidden のときだけ完全に無効化 */
+.hidden {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* 表示中の画面はタップ可能にする */
+.screen,
+#title-screen,
+#gameScreen,
+#toyamaScreen,
+#tateyamaDetailScreen,
+#cityHallDetailScreen,
+#amaharashiDetailScreen,
+#storyScreen,
+#manualOverlay {
+  pointer-events: auto !important;
+}
+
+/* 内側の要素もタップ可能 */
+.screen-inner,
+.story-inner {
+  pointer-events: auto !important;
+}
 </style>
 </head>
 <body>
