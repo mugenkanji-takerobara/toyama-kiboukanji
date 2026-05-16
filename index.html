@@ -407,69 +407,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });  /* ← DOMContentLoaded の終わり */
-  document.getElementById("btn-start").addEventListener("click", () => {
-    showScreen("gameScreen");
-  });
-
-  document.getElementById("btn-howto").addEventListener("click", () => {
-    showScreen("manualOverlay");
-  });
-
-  document.getElementById("btn-toyama").addEventListener("click", () => {
-    showScreen("toyamaScreen");
-  });
-
-  document.getElementById("tateyamaMuseumBtn").addEventListener("click", () => {
-    showScreen("tateyamaDetailScreen");
-  });
-
-  document.getElementById("cityHallBtn").addEventListener("click", () => {
-    showScreen("cityHallDetailScreen");
-  });
-
-  document.getElementById("backFromToyama").addEventListener("click", () => {
-    showScreen("title-screen");
-  });
-
-  document.getElementById("backFromTateyama").addEventListener("click", () => {
-    showScreen("toyamaScreen");
-  });
-
-  document.getElementById("backFromCityHall").addEventListener("click", () => {
-    showScreen("toyamaScreen");
-  });
-
-  document.getElementById("manualCloseBtn").addEventListener("click", () => {
-    showScreen("title-screen");
-  });
-
-  document.getElementById("amaharashiSpot").addEventListener("click", () => {
-    showScreen("amaharashiDetailScreen");
-  });
-
-  document.getElementById("backFromAmaharashi").addEventListener("click", () => {
-    showScreen("toyamaScreen");
-  });
-
-  document.getElementById("btnJP").addEventListener("click", () => {
-    document.getElementById("storyTextJP").style.display = "block";
-    document.getElementById("storyTextEN").style.display = "none";
-  });
-
-  document.getElementById("btnEN").addEventListener("click", () => {
-    document.getElementById("storyTextJP").style.display = "none";
-    document.getElementById("storyTextEN").style.display = "block";
-  });
-
-  document.getElementById("prevBtn").addEventListener("click", () => {
-    showPrevStory();
-  });
-
-  document.getElementById("nextBtn").addEventListener("click", () => {
-    showNextStory();
-  });
-
-  document.getElementById("backToTitle").addEventListener("click", () => {
 /* =========================
    きぼうかんじ ゲーム本体
    ========================= */
