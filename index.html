@@ -370,16 +370,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen("toyamaScreen");
   });
 
-  document.getElementById("btnJP").addEventListener("click", () => {
-    document.getElementById("storyTextJP").style.display = "block";
-    document.getElementById("storyTextEN").style.display = "none";
-  });
-
-  document.getElementById("btnEN").addEventListener("click", () => {
-    document.getElementById("storyTextJP").style.display = "none";
-    document.getElementById("storyTextEN").style.display = "block";
-  });
-
   document.getElementById("prevBtn").addEventListener("click", () => {
     showPrevStory();
   });
@@ -388,7 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showNextStory();
   });
   
-document.getElementById("backToTitle").addEventListener("click", () => {
+  document.getElementById("backToTitle").addEventListener("click", () => {
   showScreen("title-screen");
   let currentLang = "jp"; 
 });  // ← backToTitle の閉じ
