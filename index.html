@@ -1593,6 +1593,42 @@ in the heart of every traveler
 Fin`,
   },
 ];
+// ===============================
+// 説明書ページ送りシステム
+// ===============================
+
+const manualSlides = Array.from(document.querySelectorAll("#manualContent .slide-9-16"));
+let manualIndex = 0;
+
+function updateManualView() {
+  manualSlides.forEach((slide, i) => {
+    slide.style.display = (i === manualIndex) ? "flex" : "none";
+  });
+
+  document.getElementById("manualPage").textContent =
+    `${manualIndex + 1} / ${manualSlides.length}`;
+}
+
+// 初期化
+updateManualView();
+
+// 次へ
+document.getElementById("manualNext").addEventListener("click", () => {
+  manualIndex = (manualIndex + 1) % manualSlides.length;
+  updateManualView();
+});
+
+// 戻る
+document.getElementById("manualPrev").addEventListener("click", () => {
+  manualIndex = (manualIndex - 1 + manualSlides.length) % manualSlides.length;
+  updateManualView();
+});
+
+// 閉じる
+document.getElementById("manualCloseBtn").addEventListener("click", () => {
+  document.getElementById("manualOverlay").classList.add("hidden");
+});
+
 </script>
   
 <div id="storyScreen" class="hidden">
