@@ -1216,6 +1216,10 @@ const gameControlButtons = document.getElementById("gameControlButtons");
 const backFromAmaharashi = document.getElementById("backFromAmaharashi");
 const backFromCityHall = document.getElementById("backFromCityHall");
 const backFromTateyama = document.getElementById("backFromTateyama");
+const titleScreen = document.getElementById("title-screen");
+const gameScreen  = document.getElementById("gameScreen");
+const toyamaScreen = document.getElementById("toyamaScreen");
+const storyScreen = document.getElementById("storyScreen");
 
 pauseBtn.addEventListener("click", ()=>{
   if(!started || gameOver) return;
@@ -1252,12 +1256,6 @@ btnEN.addEventListener("click", () => {
 /* =========================
    タイトル画面 → 各画面遷移
    ========================= */
-const titleScreen = document.getElementById("title-screen");
-
-const gameScreen  = document.getElementById("gameScreen");
-const toyamaScreen = document.getElementById("toyamaScreen");
-const storyScreen = document.getElementById("storyScreen");
-
 document.getElementById("btn-start").addEventListener("click", ()=>{
   titleScreen.style.display = "none";
   gameScreen.style.display = "block";
