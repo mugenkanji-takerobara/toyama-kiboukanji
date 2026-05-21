@@ -387,13 +387,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("nextBtn").addEventListener("click", () => {
     showNextStory();
   });
-
-  document.getElementById("backToTitle").addEventListener("click", () => {
-    showScreen("title-screen");
+document.getElementById("backToTitle").addEventListener("click", () => {
+  showScreen("title-screen");
   let currentLang = "jp"; 
 });  // ← backToTitle の閉じ
 
-});  // ← ★これが必要（DOMContentLoaded の閉じ）
+});  // ← ★DOMContentLoaded の閉じ（これを追加）
 /* =========================
    きぼうかんじ ゲーム本体
    ========================= */
