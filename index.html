@@ -107,8 +107,7 @@
       <button id="btn-start" class="menu-btn">ゲーム<br>スタート</button>
       <button id="btn-howto" class="menu-btn">使いかた</button>
       <button id="btn-toyama" class="menu-btn">とやま</button>
-      <button id="lang-switch" class="menu-btn">日本語 / English</button>
-  </div>
+   </div>
 </div>
 
 <!-- ゲーム画面 -->
@@ -391,20 +390,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("backToTitle").addEventListener("click", () => {
     showScreen("title-screen");
-  });
-
-  let currentLang = "jp";
-
-  document.getElementById("lang-switch").addEventListener("click", () => {
-    if (currentLang === "jp") {
-      document.getElementById("lang-switch").textContent = "English / 日本語";
-      currentLang = "en";
-    } else {
-      document.getElementById("lang-switch").textContent = "日本語 / English";
-      currentLang = "jp";
-    }
-  });
-
 });  /* ← DOMContentLoaded の終わり */
 /* =========================
    きぼうかんじ ゲーム本体
