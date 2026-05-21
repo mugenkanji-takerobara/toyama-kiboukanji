@@ -1248,6 +1248,7 @@ const storyScreen = document.getElementById("storyScreen");
 document.getElementById("btn-start").addEventListener("click", ()=>{
   titleScreen.style.display = "none";
   gameScreen.style.display = "block";
+
 pauseBtn.addEventListener("click", ()=>{
   if(!started || gameOver) return;
   isPaused = !isPaused;
@@ -1261,6 +1262,7 @@ mainBtn.addEventListener("click", () => {
   gameOver = false;
   document.getElementById("gameScreen").style.display = "none";
   showScreen("title-screen");
+});
 });
 
 document.getElementById("btn-howto").addEventListener("click", ()=>{
