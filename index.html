@@ -1234,6 +1234,16 @@ manualOverlay.addEventListener("click",(e)=>{
     manualOverlay.classList.add("hidden");
   }
 });
+// ストーリー画面の言語切り替え
+btnJP.addEventListener("click", () => {
+  document.getElementById("storyTextJP").style.display = "block";
+  document.getElementById("storyTextEN").style.display = "none";
+});
+
+btnEN.addEventListener("click", () => {
+  document.getElementById("storyTextJP").style.display = "none";
+  document.getElementById("storyTextEN").style.display = "block";
+});
 /* =========================
    タイトル画面 → 各画面遷移
    ========================= */
