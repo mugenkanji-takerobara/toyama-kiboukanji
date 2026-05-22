@@ -1238,10 +1238,6 @@ function loop(timestamp){
       fastDrop = false;
     }
   }
-  draw();
-  requestAnimationFrame(loop);
-}
-requestAnimationFrame(loop);
 // 画面スケール調整
 function resizeCanvas(){
   const scale = Math.min(window.innerWidth/360, window.innerHeight/720);
@@ -1249,6 +1245,24 @@ function resizeCanvas(){
   wrap.style.transform = `scale(${scale})`;
   wrap.style.transformOrigin = "top center";
 }
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+const pauseBtn        = document.getElementById("pauseBtn");
+const mainBtn         = document.getElementById("mainBtn");
+const manualCloseBtn  = document.getElementById("manualCloseBtn");
+const manualOverlay   = document.getElementById("manualOverlay");
+const btnJP           = document.getElementById("btnJP");
+const btnEN           = document.getElementById("btnEN");
+const gameControlButtons = document.getElementById("gameControlButtons"); 
+const backFromAmaharashi = document.getElementById("backFromAmaharashi");
+const backFromCityHall   = document.getElementById("backFromCityHall");
+const backFromTateyama   = document.getElementById("backFromTateyama");
+const titleScreen   = document.getElementById("title-screen");
+const gameScreen    = document.getElementById("gameScreen");
+const toyamaScreen  = document.getElementById("toyamaScreen");
+const storyScreen   = document.getElementById("storyScreen");
 
 backFromAmaharashi.addEventListener("click", () => {
   showScreen("toyamaScreen");
@@ -1261,24 +1275,6 @@ backFromCityHall.addEventListener("click", () => {
 backFromTateyama.addEventListener("click", () => {
   showScreen("toyamaScreen");
 });
-  
-window.addEventListener("resize",resizeCanvas);
-resizeCanvas();
-
-const pauseBtn        = document.getElementById("pauseBtn");
-const mainBtn         = document.getElementById("mainBtn");
-const manualCloseBtn  = document.getElementById("manualCloseBtn");
-const manualOverlay   = document.getElementById("manualOverlay");
-const btnJP           = document.getElementById("btnJP");
-const btnEN           = document.getElementById("btnEN");
-const gameControlButtons = document.getElementById("gameControlButtons"); 
-const backFromAmaharashi = document.getElementById("backFromAmaharashi");
-const backFromCityHall = document.getElementById("backFromCityHall");
-const backFromTateyama = document.getElementById("backFromTateyama");
-const titleScreen = document.getElementById("title-screen");
-const gameScreen  = document.getElementById("gameScreen");
-const toyamaScreen = document.getElementById("toyamaScreen");
-const storyScreen = document.getElementById("storyScreen");
 
 pauseBtn.addEventListener("click", ()=>{
   if(!started || gameOver) return;
@@ -1294,14 +1290,16 @@ mainBtn.addEventListener("click", () => {
   document.getElementById("gameScreen").style.display = "none";
   showScreen("title-screen");
 });  
+
 manualCloseBtn.addEventListener("click", ()=>{
   manualOverlay.classList.add("hidden");
 });
+
 manualOverlay.addEventListener("click",(e)=>{
   if(e.target === manualOverlay){
     manualOverlay.classList.add("hidden");
   }
-});  
+});
 // ストーリー画面の言語切り替え
 btnJP.addEventListener("click", () => {
   document.getElementById("storyTextJP").style.display = "block";
