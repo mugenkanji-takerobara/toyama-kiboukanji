@@ -148,6 +148,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         requestAnimationFrame(gameLoop);
     }
+　　    // ======== タッチ判定 ========
+    canvas.addEventListener("click", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        for (let i = 0; i < fallingKanji.length; i++) {
+            const k = fallingKanji[i];
+
+            // 漢字の当たり判定（ざっくり矩形）
+            if (
+                x >= k.x - 10 &&
+                x <= k.x + 50 &&
+                y >= k.y - 50 &&
+                y <= k.y + 10
+            ) {
+                score += 10;
+                fallingKanji.splice(i, 1);
+                break;
+            }
+        }
+    });
+
+    // ======== スコア表示 ========
+    function updateHUD() {
+        document.getElementById("score-display").textContent = score;
+        document.getElementById("time-display").textContent = timeLeft;
+    }
+
+    setInterval(updateHUD, 100);
 
 
 
