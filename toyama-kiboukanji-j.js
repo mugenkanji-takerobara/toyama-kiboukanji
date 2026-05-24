@@ -63,7 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
         currentManualPage--;
         loadManualPage(currentManualPage);
     });
-　　    // ======== キャンバス設定 ========
+
+    // ======== キャンバス設定 ========
     const canvas = document.getElementById("game-canvas");
     const ctx = canvas.getContext("2d");
 
@@ -76,8 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
     let gameInterval = null;
     let timerInterval = null;
 
-  const kanjiList = ['三','五','八','九','百','千','万','億','兆'];
-const bonusList = ['岳','代'];
+    // 漢字データ
+    const kanjiList = [
+        "山", "川", "海", "風", "空", "星", "光", "道",
+        "森", "林", "花", "雪", "雨", "雷", "雲", "鳥",
+        "魚", "虫", "草", "竹", "石", "火", "水", "土"
+    ];
 
     // 落ちてくる漢字
     let fallingKanji = [];
@@ -144,7 +149,8 @@ const bonusList = ['岳','代'];
 
         requestAnimationFrame(gameLoop);
     }
-　　    // ======== タッチ判定 ========
+
+    // ======== タッチ判定 ========
     canvas.addEventListener("click", (e) => {
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -174,7 +180,7 @@ const bonusList = ['岳','代'];
     }
 
     setInterval(updateHUD, 100);
-　　    // ======== ボーナス処理 ========
+    // ======== ボーナス処理 ========
     let combo = 0;
     let lastHitTime = 0;
 
@@ -230,8 +236,7 @@ const bonusList = ['岳','代'];
             }
         }
     });
-
-　　    // ======== ストーリーデータ ========
+    // ======== ストーリーデータ ========
     const storyPages = [
         { title: "海のほとりにひらく景色", text: "海辺に広がる静かな景色が、心を落ち着かせる。" },
         { title: "風が運ぶ記憶", text: "風がそっと運んでくるのは、遠い日の記憶。" },
@@ -271,5 +276,3 @@ const bonusList = ['岳','代'];
     });
 
 }); // DOMContentLoaded 終了
-
-
