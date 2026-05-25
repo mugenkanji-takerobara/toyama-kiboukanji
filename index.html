@@ -427,6 +427,245 @@ body {
 </head>
 <body>
 
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIBOUKANJI - Toyama Tourism Mode</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ── 9:16 スマートフォン縦型レイアウト基本設定 ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: #e6e5e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+/* スマホ実機をイメージした縦型固定コンテナ（高齢者にも見やすい少し大きめ画面） */
+.phone-container {
+  width: 405px;
+  height: 720px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(50, 45, 40, 0.12);
+  background-color: #f7f6f2; /* 着物のような優しい生成り */
+  font-family: "Shippori Mincho", serif;
+  color: #252220; /* 目に優しい、くっきりとした深い墨色 */
+}
+
+/* 画面切り替え用の非表示クラス */
+.hidden { display: none !important; }
+
+/* 各画面の共通インナースタイル */
+.screen-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 35px 25px;
+}
+
+/* ── 1. とやま観光地一覧画面 ── */
+#toyamaScreen {
+  background-color: #f4f2ec; 
+}
+
+.toyama-title {
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-align: center;
+  color: #3a322d;
+}
+
+.toyama-sub {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: #6a605b;
+  margin-top: 6px;
+  margin-bottom: 20px;
+}
+
+/* 20個のスポットを美しく一画面内に収めるスクロールエリア */
+.spot-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-bottom: 15px;
+}
+
+/* スクロールバーを見やすく、美しく */
+.spot-list::-webkit-scrollbar { width: 5px; }
+.spot-list::-webkit-scrollbar-track { background: rgba(0,0,0,0.02); }
+.spot-list::-webkit-scrollbar-thumb { background: #c2b7aa; border-radius: 3px; }
+
+/* 情景グループごとの優しい見出し（目が迷子にならないための道標） */
+.group-heading {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b5c52;
+  background-color: #eae6dc;
+  padding: 6px 12px;
+  margin-top: 18px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+.group-heading:first-child { margin-top: 0; }
+
+/* 観光地ボタン：高齢者でも押し間違えない広いクリック面積 */
+.spot {
+  padding: 16px 12px;
+  border-bottom: 1px solid #edebe6;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 2px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+.spot:hover { background-color: rgba(255, 255, 255, 0.6); }
+
+/* 詳細画面がある特別な場所（雨晴・立山・市役所）を上品に強調 */
+.spot.special {
+  border-left: 3px solid #96826b;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.spot h3 {
+  font-size: 16px; /* 文字を少し大きく、中学生にも読みやすく */
+  font-weight: 500;
+  line-height: 1.4;
+  color: #252220;
+  letter-spacing: 0.02em;
+}
+
+.spot .addr {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 12px; /* 高齢者でもかすまない安心のサイズ */
+  font-weight: 300;
+  color: #5a504a;
+  margin-top: 6px;
+  letter-spacing: 0.01em;
+}
+
+/* ── 2. 雨晴海岸：宇宙と銀の光（漆黒の紺） ── */
+#amaharashiDetailScreen {
+  background: linear-gradient(180deg, #050a14 0%, #0c1424 100%);
+  color: #f1f5f9; /* 銀色の明かりをイメージした白銀色 */
+}
+#amaharashiDetailScreen .detail-title {
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+#amaharashiDetailScreen .detail-text {
+  color: #e2e8f0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 25px;
+}
+
+/* ── 3. 立山博物館：曼荼羅（赤と黄色の背景、夕焼けの橙は使わない） ── */
+#tateyamaDetailScreen {
+  background: linear-gradient(135deg, #7a1816 0%, #a67c1e 100%);
+  color: #fffaf9;
+}
+#tateyamaDetailScreen .detail-title { color: #ffffff; }
+#tateyamaDetailScreen .detail-sub { color: #fff0ef; border-bottom: 1px solid rgba(255,255,255,0.2); }
+#tateyamaDetailScreen .detail-list li strong { color: #ffe699; font-weight: 500; }
+
+/* ── 4. 富山市役所：日が暮れた時間のイメージ（美しい紫色） ── */
+#cityHallDetailScreen {
+  background: linear-gradient(180deg, #25122e 0%, #431f4f 100%);
+  color: #f7f2f8;
+}
+#cityHallDetailScreen .detail-title { color: #ffffff; }
+#cityHallDetailScreen .detail-sub { color: #eedbf2; border-bottom: 1px solid rgba(255,255,255,0.2); }
+
+/* ── 詳細画面共通パーツ（大きな文字でしっかり読める） ── */
+.detail-title {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.detail-sub {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-top: 30px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+}
+
+.detail-text {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 13.5px;
+  font-weight: 400;
+  line-height: 1.9;
+  letter-spacing: 0.03em;
+}
+
+.detail-list {
+  list-style: none;
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.9;
+}
+.detail-list li {
+  margin-bottom: 10px;
+}
+
+/* ── 下部：戻るボタンエリア（押しやすさ重視） ── */
+.toyama-back, .back-title {
+  width: 100%;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.nav-btn {
+  font-family: "Shippori Mincho", serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  background: transparent;
+  padding: 12px 35px; /* ボタンを大きくして押しやすく */
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* 画面ごとのボタンの色 */
+#toyamaScreen .nav-btn { border: 1px solid #96826b; color: #4a3e36; background: rgba(255,255,255,0.4); }
+#toyamaScreen .nav-btn:hover { background: #ede8df; }
+
+#amaharashiDetailScreen .nav-btn { border: 1px solid rgba(255, 255, 255, 0.4); color: #ffffff; }
+#amaharashiDetailScreen .nav-btn:hover { background: rgba(255,255,255,0.1); }
+
+#tateyamaDetailScreen .nav-btn { border: 1px solid rgba(255, 255, 255, 0.4); color: #ffffff; }
+#tateyamaDetailScreen .nav-btn:hover { background: rgba(255,255,255,0.1); }
+
+#cityHallDetailScreen .nav-btn { border: 1px solid rgba(255, 255, 255, 0.4); color: #ffffff; }
+#cityHallDetailScreen .nav-btn:hover { background: rgba(255,255,255,0.1); }
+
+</style>
+</head>
+<body>
+
 <div class="phone-container">
 
   <div id="toyamaScreen">
@@ -438,7 +677,7 @@ body {
 
       <div class="spot-list">
         
-        <div class="group-heading">山と霊峰の気配</div>
+        <div class="group-heading">山と霊峰</div>
         
         <div class="spot">
           <h3>黒部峡谷鉄道（トロッコ電車）</h3>
@@ -461,7 +700,7 @@ body {
         </div>
 
 
-        <div class="group-heading">歴史と職人の里</div>
+        <div class="group-heading">歴史と職人</div>
 
         <div class="spot">
           <h3>井波の町並み（八日町通り）</h3>
@@ -489,7 +728,7 @@ body {
         </div>
 
 
-        <div class="group-heading">海原と街道の記憶</div>
+        <div class="group-heading">日本海と街道</div>
 
         <div class="spot special" id="amaharashiSpot">
           <h3>雨晴海岸</h3>
@@ -530,7 +769,7 @@ body {
         </div>
 
 
-        <div class="group-heading">富山駅近くの水辺</div>
+        <div class="group-heading">富山駅近から水辺</div>
 
         <div class="spot">
           <h3>富山県美術館</h3>
@@ -582,7 +821,7 @@ body {
       <div>
         <h1 class="detail-title">まんだら遊苑</h1>
         <p class="detail-text">
-          立山に伝わる不思議な「立山曼荼羅（まんだら）」の世界を体験できる施設。
+          立山に伝わる不思議な「立山曼荼羅（まんだら）」の世界を、体全体で体験できる。
         </p>
 
         <h2 class="detail-sub">立山曼荼羅（まんだら）の世界</h2>
@@ -609,7 +848,7 @@ body {
       <div>
         <h1 class="detail-title">富山市役所展望塔</h1>
 
-        <h2 class="detail-sub">観覧時間</h2>
+        <h2 class="detail-sub">あいている時間</h2>
         <ul class="detail-list">
           <li><strong>平日：</strong> あさ 9:00 〜 よる 18:00</li>
           <li><strong>土曜日・日曜日・祝日：</strong> あさ 10:00 〜 よる 18:00</li>
@@ -672,6 +911,7 @@ body {
   document.getElementById('backFromToyama').addEventListener('click', () => {
     alert('メイン画面（タイトル等）へ戻る処理をここに記述します。');
   });
+
 　<div id="storyScreen" class="hidden">
   <div class="story-inner">
 
