@@ -482,15 +482,7 @@ function showScreen(id){
     "cityHallDetailScreen",
     "amaharashiDetailScreen"
   ];
-
-  const target = document.getElementById(id);
-  if (target) target.style.display = "flex";
-}
-
-  const target = document.getElementById(id);
-  if (target) target.style.display = "flex";
-}
-
+  
 function showBonusDialog(message, callback) {
   const dialog = document.getElementById("bonusDialog");
   const text = document.getElementById("bonusDialogText");
