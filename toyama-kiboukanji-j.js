@@ -1,3 +1,10 @@
+// ─────────────────────────────
+// 波の環境音（常時・低音量）
+// ─────────────────────────────
+let waveBGM = new Audio("audio/穏やかな波.mp3");
+waveBGM.loop = true;
+waveBGM.volume = 0.08;  // 静かで世界観に合う最適値
+
 let storyBGM = new Audio("audio/shamisen_intro.mp3");
 storyBGM.loop = true;
 storyBGM.volume = 0;
