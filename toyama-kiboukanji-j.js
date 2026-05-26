@@ -1072,7 +1072,7 @@ function triggerBonus(ch){
   bonusMode = ch;
   playBonusBGM();
 
-  else if(ch==="代"){
+  if(ch==="代"){
     bonusRemaining = 3;
   }
   else if(ch==="岳"){
