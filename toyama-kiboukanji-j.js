@@ -1262,8 +1262,12 @@ function loop(timestamp){
       fastDrop = false;
     }
   }
-} 
-requestAnimationFrame(loop);  
+
+  draw();                    // ← ここで毎回えがく
+  requestAnimationFrame(loop); // ← ここでつづけてよぶ
+}
+requestAnimationFrame(loop);
+
 // 画面スケール調整
 function resizeCanvas(){
   const scale = Math.min(window.innerWidth/360, window.innerHeight/720);
