@@ -1415,23 +1415,6 @@ console.log({
   storyScreen
 });
 
-// backFromAmaharashi.addEventListener("click", () => {
-//   showScreen("toyamaScreen");
-// });
-
-// backFromCityHall.addEventListener("click", () => {
-//   showScreen("toyamaScreen");
-// });
-
-// backFromTateyama.addEventListener("click", () => {
-//   showScreen("toyamaScreen");
-// });
-
-// backFromToyama.addEventListener("click", () => {
-//   showScreen("title-screen");
-// });
-
-  
 pauseBtn.addEventListener("click", ()=>{
   if(!started || gameOver) return;
   isPaused = !isPaused;
