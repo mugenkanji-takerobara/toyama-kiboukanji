@@ -320,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 }); // DOMContentLoaded 終了
-</script>
+<script>
 <div id="toyamaScreen" class="hidden">
   <div class="screen-inner">
     <h1 class="toyama-title">とやま</h1>
@@ -463,7 +463,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
 </div>
-<script>
+</script>
 function showScreen(id){
   const screens = [
     "title-screen",
