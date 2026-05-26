@@ -76,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
         playBGM();
         showScreen("story-screen");
         loadStoryPage(0);
+
+      // ★ 波の音を再生（常時）
+    waveBGM.play().catch(()=>{});
     });
 
     document.getElementById("manual-button").addEventListener("click", () => {
