@@ -1164,7 +1164,15 @@ body {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Noto+Sans+JP:wght@300;400&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-<style>
+.screen {
+  pointer-events: none;
+}
+
+.screen:not(.hidden) {
+  pointer-events: auto;
+}
+
+</style>
 /* ── 9:16 スマートフォン縦型共通スタイル ── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
