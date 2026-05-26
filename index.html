@@ -136,6 +136,22 @@
 #manualOverlay.hidden .manual-content {
   display: none;
 }
+/* 画面の誤タップ防止（透明画面が上に残るバグ対策） */
+.screen {
+  pointer-events: none;
+}
+
+#title-screen,
+#game-screen,
+#story-screen,
+#manual-screen,
+#toyamaScreen,
+#tateyamaDetailScreen,
+#cityHallDetailScreen,
+#amaharashiDetailScreen {
+  pointer-events: auto;
+}
+  
 </style>
 </head>
 <body>
