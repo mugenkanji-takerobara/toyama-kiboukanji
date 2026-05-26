@@ -1,3 +1,40 @@
+let storyBGM = new Audio("audio/shamisen_intro.mp3");
+storyBGM.loop = true;
+storyBGM.volume = 0;
+
+function updateStoryBGM(pageIndex) {
+    if (pageIndex <= 5) {
+        fadeIn(storyBGM);
+    } else {
+        fadeOut(storyBGM);
+    }
+}
+
+function fadeIn(audio) {
+    let v = audio.volume;
+    audio.play();
+    let fade = setInterval(() => {
+        if (v < 0.22) {
+            v += 0.01;
+            audio.volume = v;
+        } else {
+            clearInterval(fade);
+        }
+    }, 150);
+}
+
+function fadeOut(audio) {
+    let v = audio.volume;
+    let fade = setInterval(() => {
+        if (v > 0) {
+            v -= 0.01;
+            audio.volume = v;
+        } else {
+            audio.pause();
+            clearInterval(fade);
+        }
+    }, 150);
+}
 document.addEventListener("DOMContentLoaded", () => {
     console.log("JS Loaded");
 
