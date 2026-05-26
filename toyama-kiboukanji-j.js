@@ -483,20 +483,9 @@ function showScreen(id){
     "amaharashiDetailScreen"
   ];
 
-  screens.forEach(s => {
-    const el = document.getElementById(s);
-    if (el) el.style.display = "none";
-  });
-
   const target = document.getElementById(id);
   if (target) target.style.display = "flex";
 }
-
-
-  screens.forEach(s => {
-    const el = document.getElementById(s);
-    if (el) el.style.display = "none";
-  });
 
   const target = document.getElementById(id);
   if (target) target.style.display = "flex";
