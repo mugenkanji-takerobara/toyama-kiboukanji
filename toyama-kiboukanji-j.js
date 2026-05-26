@@ -327,6 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 }); // DOMContentLoaded 終了
+</script>
 <div id="toyamaScreen" class="hidden">
   <div class="screen-inner">
     <h1 class="toyama-title">とやま</h1>
