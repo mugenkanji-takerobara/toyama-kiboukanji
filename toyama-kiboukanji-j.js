@@ -321,6 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // ======== タイトルへ戻る ========
     document.getElementById("back-to-title").addEventListener("click", () => {
         showScreen("title-screen");
+      // ★ 波の音を止める
+    waveBGM.pause();
+    waveBGM.currentTime = 0;
     });
 
 }); // DOMContentLoaded 終了
