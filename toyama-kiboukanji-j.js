@@ -896,7 +896,11 @@ function startGame(lv){
   level = lv;
   started = true;
   isPaused = false;
-  document.getElementById("easyBtn").classList.add("hidden");
+
+titleScreen.classList.add("hidden");
+gameScreen.classList.remove("hidden");
+
+document.getElementById("easyBtn").classList.add("hidden");
 document.getElementById("hardBtn").classList.add("hidden");
 document.getElementById("restartBtn").classList.add("hidden");
 gameControlButtons.classList.remove("hidden");  // flex の代わり
