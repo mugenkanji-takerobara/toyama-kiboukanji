@@ -390,6 +390,11 @@ function leaveStory() {
 // ボタンに紐づけ
 document.getElementById("story-button").onclick = enterStory;
 document.getElementById("story-back").onclick = leaveStory;
+document.getElementById("story-button").onclick = () => {
+  console.log("test play");
+  new Audio("穏やかな波.mp3").play();
+  show("storyScreen");
+};
 
 </script>
 
