@@ -352,6 +352,45 @@ document.getElementById("story-button").onclick = () => show("storyScreen");
 // 物語 → ゲーム
 document.getElementById("story-back").onclick = () => show("game-screen");
 console.log("start-button:", document.getElementById("start-button"));
+
+// ===== 物語モードの音 =====
+const waveBgm = new Audio("穏やかな波.mp3");
+waveBgm.loop = true;
+waveBgm.volume = 0.12;
+
+const shamisenIntro = new Audio("shamisen_intro.mp3");
+shamisenIntro.volume = 0.17;
+
+// 物語に入る
+function enterStory() {
+  // 波の音（すでに鳴っていたらそのまま）
+  if (waveBgm.paused) {
+    waveBgm.currentTime = 0;
+    waveBgm.play();
+  }
+
+  // 三味線（1ページ目だけ）
+  shamisenIntro.currentTime = 0;
+  shamisenIntro.play();
+
+  show("storyScreen");
+}
+
+// 物語から戻る
+function leaveStory() {
+  waveBgm.pause();
+  waveBgm.currentTime = 0;
+
+  shamisenIntro.pause();
+  shamisenIntro.currentTime = 0;
+
+  show("game-screen");
+}
+
+// ボタンに紐づけ
+document.getElementById("story-button").onclick = enterStory;
+document.getElementById("story-back").onclick = leaveStory;
+
 </script>
 
 <!-- ★外部JSは script の外に置く★ -->
