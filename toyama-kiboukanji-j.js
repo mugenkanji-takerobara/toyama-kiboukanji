@@ -372,6 +372,42 @@ document.getElementById("story-back").addEventListener("click", () => {
   showScreen("game-screen");
 });
 </script>
+// ===== 物語モード用オーディオ =====
+const waveBgm = new Audio("穏やかな波.mp3");
+waveBgm.loop = true;
+waveBgm.volume = 0.12;
+
+const shamisenIntro = new Audio("shamisen_intro.mp3");
+shamisenIntro.volume = 0.17;
+
+// 物語画面を開いたとき
+function enterStory() {
+  // 波BGMスタート（すでに鳴っていたらそのまま）
+  if (waveBgm.paused) {
+    waveBgm.currentTime = 0;
+    waveBgm.play();
+  }
+
+  // 三味線イントロ（毎回頭から）
+  shamisenIntro.currentTime = 0;
+  shamisenIntro.play();
+
+  show("storyScreen");
+}
+
+// 物語画面から戻るとき
+function leaveStory() {
+  show("game-screen");
+  // 波は物語専用なので止める
+  waveBgm.pause();
+  waveBgm.currentTime = 0;
+  // 三味線も止める
+  shamisenIntro.pause();
+}
+
+// 既存のボタンイベントを書き換え
+document.getElementById("story-button").onclick = enterStory;
+document.getElementById("story-back").onclick = leaveStory;
 
 function showScreen(id){
   const screens = [
