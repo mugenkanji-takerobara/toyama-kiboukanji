@@ -366,16 +366,9 @@ function show(id) {
 }
 // タイトル → ゲーム
 document.getElementById("start-button").onclick = () => show("game-screen");
-
-// ゲーム → 説明書
-document.getElementById("manual-button-game").onclick = () => {
-  document.getElementById("manualOverlay").classList.add("active");
-};
-// 説明書閉じる
-document.getElementById("close-manual").onclick = () => {
-  document.getElementById("manualOverlay").classList.remove("active");
-};
-
+document.getElementById("manual-button-game").onclick = () => show("manualOverlay");
+document.getElementById("manual-button").onclick = () => show("manualOverlay");
+document.getElementById("close-manual").onclick = () => show("game-screen");
 // ゲーム → とやま
 document.getElementById("toyama-button").onclick = () => show("toyamaScreen");
 
