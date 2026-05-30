@@ -80,6 +80,19 @@ document.addEventListener("DOMContentLoaded", () => {
       // ★ 波の音を再生（常時）
     waveBGM.play().catch(()=>{});
     });
+　　function playShamisenTimed() {
+    shamisenIntro.currentTime = 0;
+    shamisenIntro.volume = 0.01;  // 小さめ
+    shamisenIntro.play();
+
+    setTimeout(() => { shamisenIntro.volume = 0.007; }, 17000);
+    setTimeout(() => { shamisenIntro.volume = 0.004; }, 18000);
+    setTimeout(() => { shamisenIntro.volume = 0.002; }, 19000);
+    setTimeout(() => {
+        shamisenIntro.pause();
+        shamisenIntro.currentTime = 0;
+    }, 20000);
+}
 
     document.getElementById("manual-button").addEventListener("click", () => {
         playBGM();
