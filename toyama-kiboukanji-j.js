@@ -387,10 +387,6 @@ function leaveStory() {
   shamisenIntro.pause();
 }
 
-// 既存のボタンイベントを書き換え
-document.getElementById("story-button").onclick = enterStory;
-document.getElementById("story-back").onclick = leaveStory;
-
 function showScreen(id){
   const screens = [
     "title-screen",
