@@ -70,30 +70,24 @@ button {
   pointer-events: auto;
 }
 
-.story-img {
-  width: 100% !important;
-  aspect-ratio: 2 / 1 !important;
-  object-fit: cover !important;
-  background: #fff; /* 白背景で自然に見える */
+#story-screen {
+  background: #000000;   /* ← 完全な黒背景 */
 }
-/* 物語テキスト：背景なし・レトロ感だけ残す */
 .story-text {
   text-align: center;
-  font-size: 1.3rem;       /* ← 小さめにして画像を圧迫しない */
-  line-height: 1.8;
-  margin: 14px auto;
+  font-size: 1.1rem;     /* ← さらに小さくして画像を邪魔しない */
+  line-height: 1.7;
+  margin: 12px auto;
   width: 90%;
 
-  /* ▼ 白文字だけでレトロ感を出す（背景なし） */
-  color: #ffffff;
-
-  /* ▼ 読みやすいフォント（難しい漢字もOK） */
+  color: #ffffff;        /* 白文字 */
   font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
   letter-spacing: 0.02em;
 
-  /* ▼ ほんの少し影を入れて視認性UP（画像の上でも読める） */
+  /* 画像の上でも読みやすい軽い影 */
   text-shadow: 2px 2px 3px rgba(0,0,0,0.55);
 }
+
 </style>
 </head>
 
