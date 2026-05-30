@@ -331,10 +331,15 @@ button {
 <script>
 // 画面切り替え
 function show(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
+  document.querySelectorAll('.screen').forEach(s => {
+    s.style.display = "none";
+  });
 
+  const target = document.getElementById(id);
+  if (target) {
+    target.style.display = "block";
+  }
+}
 // タイトル → ゲーム
 document.getElementById("start-button").onclick = () => show("game-screen");
 
