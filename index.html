@@ -367,10 +367,9 @@ function show(id) {
 document.getElementById("start-button").onclick = () => show("game-screen");
 
 // ゲーム → 説明書
-document.getElementById("manual-button").onclick = () => {
+document.getElementById("manual-button-game").onclick = () => {
   document.getElementById("manualOverlay").classList.add("active");
 };
-
 // 説明書閉じる
 document.getElementById("close-manual").onclick = () => {
   document.getElementById("manualOverlay").classList.remove("active");
