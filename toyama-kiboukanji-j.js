@@ -71,10 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showScreen("game-screen");
         startGame();
     });
-      // ★ 波の音を再生（常時）
-    waveBGM.play().catch(()=>{});
-    });
-　　function playShamisenTimed() {
+ 　　function playShamisenTimed() {
   shamisenIntro.currentTime = 0;
   shamisenIntro.volume = 0.003;  // かなり小さめ
   shamisenIntro.play().catch(()=>{});
