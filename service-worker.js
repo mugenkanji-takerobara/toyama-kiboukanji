@@ -34,4 +34,4 @@ self.addEventListener('fetch', event => {
     })
   );
 });
-show("title-screen");
+
