@@ -373,11 +373,7 @@ document.getElementById("story-back").addEventListener("click", () => {
 });
 </script>
 // ===== 物語モード用オーディオ =====
-const waveBgm = new Audio("穏やかな波.mp3");
-waveBgm.loop = true;
 waveBgm.volume = 0.01;
-
-const shamisenIntro = new Audio("shamisen_intro.mp3");
 shamisenIntro.volume = 0.02;
 
 // 物語画面を開いたとき
