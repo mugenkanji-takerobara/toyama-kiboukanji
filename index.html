@@ -76,29 +76,24 @@ button {
   object-fit: cover !important;
   background: #fff; /* 白背景で自然に見える */
 }
-
-/* 物語テキスト：ファミコンRPG風デザイン */
+/* 物語テキスト：背景なし・レトロ感だけ残す */
 .story-text {
   text-align: center;
-  font-size: 1.6rem;
-  line-height: 1.9;
-  margin: 0 auto;
+  font-size: 1.3rem;       /* ← 小さめにして画像を圧迫しない */
+  line-height: 1.8;
+  margin: 14px auto;
   width: 90%;
 
-  /* ▼ レトロRPG風の白文字 × 黒背景 */
+  /* ▼ 白文字だけでレトロ感を出す（背景なし） */
   color: #ffffff;
-  background: #000000;
-  padding: 16px 20px;
-  border-radius: 12px;
 
-  /* ▼ 文字を読みやすくする（老若男女向け） */
+  /* ▼ 読みやすいフォント（難しい漢字もOK） */
   font-family: "Noto Sans JP", "Yu Gothic", sans-serif;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
 
-  /* ▼ 昭和レトロ感（枠の雰囲気） */
-  box-shadow: 0 0 0 3px #ffffff inset;
+  /* ▼ ほんの少し影を入れて視認性UP（画像の上でも読める） */
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.55);
 }
-
 </style>
 </head>
 
