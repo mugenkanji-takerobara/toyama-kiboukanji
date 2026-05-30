@@ -276,24 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
-    // ======== ストーリーデータ ========
-    const storyPages = [
-        { title: "海のほとりにひらく景色", text: "海辺に広がる静かな景色が、心を落ち着かせる。" },
-        { title: "風が運ぶ記憶", text: "風がそっと運んでくるのは、遠い日の記憶。" },
-        { title: "光の道しるべ", text: "光が差し込むその先に、新しい物語が待っている。" }
-    ];
-
-    function loadStoryPage(index) {
-        if (index < 0) index = 0;
-        if (index >= storyPages.length) index = storyPages.length - 1;
-
-        currentStoryPage = index;
-　　   // ★★★ 三線BGMを制御する行（ここが最重要） ★★★
-    updateStoryBGM(index);
-        document.getElementById("story-title").textContent = storyPages[index].title;
-        document.getElementById("story-text").textContent = storyPages[index].text;
-    }
-
+   
     // ======== 説明書データ ========
     const manualPages = [
         { title: "遊び方", text: "落ちてくる漢字をタップしてスコアを稼ごう。" },
