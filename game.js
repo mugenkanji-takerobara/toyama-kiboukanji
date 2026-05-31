@@ -87,8 +87,10 @@ document.addEventListener("DOMContentLoaded", () => {
         showScreen("manual-screen");
         loadManualPage(0);
     });
-　　document.getElementById("toyama-button").onclick = () => showScreen("toyamaScreen");
-
+　　document.getElementById("toyama-button").onclick = () => {
+  console.log("toyama click");
+  showScreen("toyamaScreen");
+};
     // ======== ストーリー・説明書ページ管理 ========
     let currentStoryPage = 0;
     let currentManualPage = 0;
