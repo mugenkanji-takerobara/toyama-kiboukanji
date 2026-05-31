@@ -41,8 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 最初の画面
     showScreen("title-screen");
+
 // 画面管理
 const screens = document.querySelectorAll(".screen");
+function showScreen(id) {
+    screens.forEach(s => s.classList.remove("active"));
+    const target = document.getElementById(id);
+    if (target) target.classList.add("active");
+}
 // ★ showScreen は削除（toyama-kiboukanji-j.js のものを使う）
 
     // BGM
