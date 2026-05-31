@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const target = document.getElementById(id);
         if (target) target.style.display = "block";
     }
+　　window.showScreen = showScreen;
 
     // 最初の画面
     showScreen("title-screen");
