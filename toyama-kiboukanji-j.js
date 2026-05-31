@@ -415,13 +415,6 @@ document.getElementById('sciSpotBtn')?.addEventListener('click', ()=> { toyamaSc
 document.getElementById('toyamajoSpotBtn')?.addEventListener('click', ()=> { toyamaScreen.classList.add('hidden'); toyamajoDetail.classList.remove('hidden'); showTransient(3500); });
 document.getElementById('mirageSpotBtn')?.addEventListener('click', ()=> { toyamaScreen.classList.add('hidden'); mirageDetail.classList.remove('hidden'); showTransient(3500); });
 
-// back buttons
-document.getElementById('backFromIwase')?.addEventListener('click', ()=> { iwaseDetail.classList.add('hidden'); toyamaScreen.classList.remove('hidden'); showTransient(3000); });
-document.getElementById('backFromYao')?.addEventListener('click', ()=> { yaoDetail.classList.add('hidden'); toyamaScreen.classList.remove('hidden'); showTransient(3000); });
-document.getElementById('backFromSci')?.addEventListener('click', ()=> { sciDetail.classList.add('hidden'); toyamaScreen.classList.remove('hidden'); showTransient(3000); });
-document.getElementById('backFromToyamajo')?.addEventListener('click', ()=> { toyamajoDetail.classList.add('hidden'); toyamaScreen.classList.remove('hidden'); showTransient(3000); });
-document.getElementById('backFromMirage')?.addEventListener('click', ()=> { mirageDetail.classList.add('hidden'); toyamaScreen.classList.remove('hidden'); showTransient(3000); });
-
 // rainharashi: 物語モードへ遷移（既存仕様）
 document.getElementById('amaharashiSpot')?.addEventListener('click', ()=> {
   if(typeof showScreen === 'function') showScreen('storyScreen');
