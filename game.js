@@ -39,9 +39,6 @@ function fadeOut(audio) {
 document.addEventListener("DOMContentLoaded", () => {
     console.log("JS Loaded");
 
-    // 最初の画面
-    showScreen("title-screen");
-
 // 画面管理
 const screens = document.querySelectorAll(".screen");
 function showScreen(id) {
@@ -49,6 +46,10 @@ function showScreen(id) {
     const target = document.getElementById(id);
     if (target) target.classList.add("active");
 }
+
+    // 最初の画面
+    showScreen("title-screen");
+
 // ★ showScreen は削除（toyama-kiboukanji-j.js のものを使う）
 
     // BGM
