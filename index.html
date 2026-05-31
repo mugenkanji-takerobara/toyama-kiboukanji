@@ -257,10 +257,11 @@ button {
   </div>
 
   <div class="spot" id="yaoSpotBtn">
-    <h3 data-en="Yatsuo Owara Museum">八尾おわら資料館</h3>
-    <img src="o16.jpg" class="spot-img" alt="">
-    <p class="addr" data-en="Yatsuo, Toyama">富山県富山市八尾町上新町289</p>
-  </div>
+  <h3 data-en="Yatsuo Owara Museum">八尾おわら資料館</h3>
+  <img src="o16.jpg" class="spot-img" alt="">
+  <button class="story-btn" id="yaoMoreBtn">八尾の写真を見る</button>
+  <p class="addr" data-en="Yatsuo, Toyama">富山県富山市八尾町上新町289</p>
+</div>
 
   <div class="group-heading">🌊 日本海と街道 <small data-en="Sea & Old Routes"></small></div>
 
@@ -284,11 +285,12 @@ button {
     <p class="addr" data-en="Imizu">富山県射水市海王町8</p>
   </div>
 
-  <div class="spot" id="iwaseSpotBtn">
-    <h3 data-en="Iwase Townscape">岩瀬の町並み</h3>
-    <img src="i1.jpg" class="spot-img" alt="">
-    <p class="addr" data-en="Iwase, Toyama">富山県富山市岩瀬大町</p>
-  </div>
+ <div class="spot" id="iwaseSpotBtn">
+  <h3 data-en="Iwase Townscape">岩瀬の町並み</h3>
+  <img src="i1.jpg" class="spot-img" alt="">
+  <button class="story-btn" id="iwaseMoreBtn">岩瀬の写真を見る</button>
+  <p class="addr" data-en="Iwase, Toyama">富山県富山市岩瀬大町</p>
+</div>
 
   <div class="group-heading">🌿 丘の自然と知の空間 <small data-en="Hills & Knowledge"></small></div>
 
@@ -342,36 +344,26 @@ button {
   <button id="toyama-amaharashi">雨晴海岸</button>
 
    <!-- 岩瀬 -->
-<div id="iwaseDetailScreen" class="hidden">
+<div id="iwaseMoreScreen" class="hidden">
   <div class="screen-inner">
     <div class="detail-gallery">
-      <img src="i1.jpg" class="detail-img">
       <img src="i2.jpg" class="detail-img">
       <img src="i3.jpg" class="detail-img">
       <img src="i4.jpg" class="detail-img">
       <img src="i5.jpg" class="detail-img">
       <img src="i6.jpg" class="detail-img">
     </div>
-    <h1 class="detail-title" data-en="Iwase Townscape">岩瀬の町並み</h1>
-    <p class="detail-text" data-en="Historic port town with preserved streets.">富山市岩瀬大町。北前船で栄えた港町の町並みです。</p>
-    <div class="back-title"><button id="backFromIwase" class="nav-btn">とやまにもどる</button></div>
   </div>
 </div>
-
 <!-- 八尾 -->
-<div id="yaoDetailScreen" class="hidden">
+<<div id="yaoMoreScreen" class="hidden">
   <div class="screen-inner">
     <div class="detail-gallery">
-      <img src="o16.jpg" class="detail-img">
       <img src="o8.jpg" class="detail-img">
       <img src="o3.jpg" class="detail-img">
     </div>
-    <h1 class="detail-title" data-en="Yatsuo Owara Museum">八尾おわら資料館</h1>
-    <p class="detail-text" data-en="Museum for Owara Kaze no Bon festival.">おわら風の盆の歴史と空気を感じられる場所です。</p>
-    <div class="back-title"><button id="backFromYao" class="nav-btn">とやまにもどる</button></div>
   </div>
 </div>
-
 <!-- 科学博物館 -->
 <div id="sciDetailScreen" class="hidden">
   <div class="screen-inner">
