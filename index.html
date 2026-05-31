@@ -368,17 +368,6 @@ button {
 </div>
 
 <script>
-// 画面切り替え
-function show(id) {
-  document.querySelectorAll('.screen').forEach(s => {
-    s.style.display = "none";
-  });
-
-  const target = document.getElementById(id);
-  if (target) {
-    target.style.display = "block";
-  }
-}
 // タイトル → ゲーム
 document.getElementById("start-button").onclick = () => show("game-screen");
 
