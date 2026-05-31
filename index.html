@@ -368,20 +368,6 @@ button {
 </div>
 
 <script>
-// タイトル → ゲーム
-document.getElementById("start-button").onclick = () => show("game-screen");
-
-document.getElementById("manual-button").onclick = () => show("manualOverlay");
-document.getElementById("close-manual").onclick = () => show("game-screen");
-// ゲーム → とやま
-document.getElementById("toyama-button").onclick = () => show("toyamaScreen");
-
-// とやま → ゲーム
-document.getElementById("back-to-game").onclick = () => show("game-screen");
-document.getElementById("toyama-amaharashi").onclick = () => show("storyScreen");
-// 物語 → ゲーム
-console.log("start-button:", document.getElementById("start-button"));
-
 // ===== 物語モードの音 =====
 const waveBgm = new Audio("audio/穏やかな波.mp3");
 waveBgm.loop = true;
