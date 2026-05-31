@@ -394,8 +394,6 @@ function enterStory() {
   }
 
   playShamisenOnce(); // ← 17秒だけ鳴らす
-
-  show("storyScreen");
 }
 
 // 物語から戻る
@@ -405,8 +403,6 @@ function leaveStory() {
 
   shamisenIntro.pause();
   shamisenIntro.currentTime = 0;
-
-  show("game-screen");
 }
 
 // ボタンに紐づけ（1つだけ）
