@@ -395,8 +395,17 @@ function enterStory() {
 
   playShamisenOnce(); // ← 17秒だけ鳴らす
 }
+function enterStory() {
+  if (waveBgm.paused) {
+    waveBgm.currentTime = 0;
+    waveBgm.play();
+  }
 
-// 物語から戻る
+  playShamisenOnce();
+
+  // ★ 物語画面へ切り替え
+  showScreen("storyScreen");
+}
 function leaveStory() {
   waveBgm.pause();
   waveBgm.currentTime = 0;
