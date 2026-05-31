@@ -91,6 +91,15 @@ button {
 #manualOverlay { pointer-events: none; }
 #manualOverlay.active { pointer-events: auto; }
 
+#manualOverlay {
+  display: none;
+  pointer-events: none;
+}
+
+#manualOverlay.active {
+  display: flex;
+  pointer-events: auto;
+} 
 /* 透明レイヤー対策（重要） */
 .screen {
   pointer-events: none;
