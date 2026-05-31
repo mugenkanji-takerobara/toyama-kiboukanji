@@ -34,33 +34,30 @@ function fadeOut(audio) {
         }
     }, 150);
 }
-
 // ======== DOM 読み込み後 ========
 document.addEventListener("DOMContentLoaded", () => {
     console.log("JS Loaded");
 
-// 画面管理
-const screens = document.querySelectorAll(".screen");
-function showScreen(id) {
-    screens.forEach(s => s.classList.remove("active"));
-    const target = document.getElementById(id);
-    if (target) target.classList.add("active");
-}
+    // 画面管理
+    const screens = document.querySelectorAll(".screen");
+    function showScreen(id) {
+        screens.forEach(s => s.classList.remove("active"));
+        const target = document.getElementById(id);
+        if (target) target.classList.add("active");
+    }
 
     // 最初の画面
     showScreen("title-screen");
 
-// ★ showScreen は削除（toyama-kiboukanji-j.js のものを使う）
-
     // BGM
-const bgm = document.getElementById("bgm");
+    const bgm = document.getElementById("bgm");
     function playBGM() {
         if (bgm.paused) {
             bgm.volume = 0.01;
             bgm.play().catch(() => {});
         }
     }
-});  
+});
     // ======== ボタン ========
     document.getElementById("start-button").addEventListener("click", () => {
         playBGM();
