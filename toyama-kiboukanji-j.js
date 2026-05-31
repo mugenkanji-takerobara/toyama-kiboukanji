@@ -84,12 +84,6 @@ function playShamisenTimed() {
   }, 20000);
 }
 
-document.getElementById("story-button").addEventListener("click", () => {
-  showScreen("story-screen");
-  waveBGM.play().catch(()=>{});
-  playShamisenTimed();
-});
-
 document.getElementById("manual-button").addEventListener("click", () => {
   playBGM();
   showScreen("manual-screen");
