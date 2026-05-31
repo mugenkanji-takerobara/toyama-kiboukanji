@@ -384,17 +384,10 @@ function playShamisenOnce() {
   setTimeout(() => {
     shamisenIntro.pause();
     shamisenIntro.currentTime = 0;
-  }, 18000); // 18秒
+  }, 18000);
 }
-// 物語に入る
-function enterStory() {
-  if (waveBgm.paused) {
-    waveBgm.currentTime = 0;
-    waveBgm.play();
-  }
 
-  playShamisenOnce(); // ← 17秒だけ鳴らす
-}
+// 物語に入る
 function enterStory() {
   if (waveBgm.paused) {
     waveBgm.currentTime = 0;
@@ -406,15 +399,20 @@ function enterStory() {
   // ★ 物語画面へ切り替え
   showScreen("storyScreen");
 }
+
+// 物語から戻る
 function leaveStory() {
   waveBgm.pause();
   waveBgm.currentTime = 0;
 
   shamisenIntro.pause();
   shamisenIntro.currentTime = 0;
+
+  // ★ ゲーム画面へ戻る
+  showScreen("game-screen");
 }
 
-// ボタンに紐づけ（1つだけ）
+// ボタンに紐づけ
 document.getElementById("story-back").onclick = leaveStory;
 
 document.getElementById("lang-ja").onclick = () => {
@@ -426,7 +424,7 @@ document.getElementById("lang-en").onclick = () => {
   document.querySelectorAll(".story-ja").forEach(e => e.style.display = "none");
   document.querySelectorAll(".story-en").forEach(e => e.style.display = "block");
 };
-show("title-screen");
+
 </script>
 
 <!-- ★外部JSは script の外に置く★ -->
