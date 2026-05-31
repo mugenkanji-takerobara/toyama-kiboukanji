@@ -91,25 +91,25 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentStoryPage = 0;
     let currentManualPage = 0;
 
-    document.getElementById("story-next").addEventListener("click", () => {
-        currentStoryPage++;
-        loadStoryPage(currentStoryPage);
-    });
+     // document.getElementById("story-next").addEventListener("click", () => {
+          // currentStoryPage++;
+          // loadStoryPage(currentStoryPage);
+      // });
 
-    document.getElementById("story-prev").addEventListener("click", () => {
-        currentStoryPage--;
-        loadStoryPage(currentStoryPage);
-    });
+     // document.getElementById("story-prev").addEventListener("click", () => {
+           //currentStoryPage--;
+          // loadStoryPage(currentStoryPage);
+      // });
 
-    document.getElementById("manual-next").addEventListener("click", () => {
-        currentManualPage++;
-        loadManualPage(currentManualPage);
-    });
+     // document.getElementById("manual-next").addEventListener("click", () => {
+           //currentManualPage++;
+           //loadManualPage(currentManualPage);
+      // });
 
-    document.getElementById("manual-prev").addEventListener("click", () => {
-        currentManualPage--;
-        loadManualPage(currentManualPage);
-    });
+     // document.getElementById("manual-prev").addEventListener("click", () => {
+           //currentManualPage--;
+           //loadManualPage(currentManualPage);
+      // });
 
     // ======== キャンバス設定 ========
     const canvas = document.getElementById("game-canvas");
