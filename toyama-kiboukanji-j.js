@@ -422,6 +422,10 @@ document.getElementById('amaharashiSpot')?.addEventListener('click', ()=> {
 document.getElementById('amaharashiStoryBtn')?.addEventListener('click', ()=>{
   if(typeof showScreen === 'function') showScreen('storyScreen');
 });
+document.getElementById('tateyamaMoreBtn')?.addEventListener('click', ()=>{
+  toyamaScreen.classList.add('hidden');
+  tateyamaDetail.classList.remove('hidden');
+});
 
 </script>
 // ===== 物語モード用オーディオ =====
