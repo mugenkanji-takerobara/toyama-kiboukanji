@@ -86,7 +86,7 @@ function playShamisenTimed() {
 
 document.getElementById("manual-button").addEventListener("click", () => {
   playBGM();
-  showScreen("manual-screen");
+  showScreen("manualOverlay");
   loadManualPage(0);
 });
     // ストーリー・説明書ページ管理
