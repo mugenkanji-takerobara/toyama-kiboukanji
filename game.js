@@ -68,7 +68,19 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("toyama click");
         showScreen("toyamaScreen");
     });
+                         // とやま画面の即時確実なハンドラ（恒久）
+const amaBtn = document.getElementById('toyama-amaharashi');
+if (amaBtn) amaBtn.addEventListener('click', () => {
+  console.log('雨晴海岸 click');
+  showScreen('storyScreen');
+  if (typeof loadStoryPage === 'function') loadStoryPage(0);
+});
 
+const backBtn = document.getElementById('back-to-game');
+if (backBtn) backBtn.addEventListener('click', () => {
+  console.log('戻る click');
+  showScreen('title-screen');
+});
     // ======== 三味線（例） ========
     function playShamisenTimed() {
         if (!shamisenIntro) return;
