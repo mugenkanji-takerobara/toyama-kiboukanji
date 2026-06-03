@@ -1247,6 +1247,51 @@ document.getElementById("lang-en").onclick = () => {
     showScreen('game-screen');
     try{ startGame(); }catch(e){ console.error(e); }
   });
+<script>
+/* 一時UIスタブ：説明書・物語・タイトルを動かす */
+(function(){
+  // showScreen の安全版
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+    const t = document.getElementById(id);
+    if(t) t.classList.remove('hidden');
+  }
+  window.showScreen = showScreen;
+
+  // Start ボタン上書き（本体が無くても画面切替）
+  const startBtn = document.getElementById('start-button');
+  if(startBtn){
+    startBtn.addEventListener('click', ()=>{
+      showScreen('game-screen');
+      console.log('Start pressed (stub).');
+    });
+  }
+
+  // Manual 開閉（存在すれば）
+  document.getElementById('manual-button')?.addEventListener('click', ()=>{
+    document.getElementById('manualOverlay')?.classList.remove('hidden');
+  });
+  document.getElementById('manual-next')?.addEventListener('click', ()=>{
+    // 単純に次の manual-text を探して表示（実装があれば上書きされる）
+    console.log('manual-next pressed');
+  });
+  document.getElementById('manual-prev')?.addEventListener('click', ()=>{ console.log('manual-prev pressed'); });
+
+  // story の簡易遷移
+  document.getElementById('toyama-amaharashi')?.addEventListener('click', ()=>{ showScreen('storyScreen'); });
+  document.getElementById('story-next')?.addEventListener('click', ()=>{ console.log('story-next'); });
+  document.getElementById('story-prev')?.addEventListener('click', ()=>{ console.log('story-prev'); });
+
+  // タイトルの見た目調整（ゴールド右寄せ）
+  const titleBtns = document.querySelectorAll('#title-screen .btn');
+  titleBtns.forEach(b=>{
+    b.style.color = '#000';
+    b.style.background = 'gold';
+    b.style.textAlign = 'right';
+  });
+
+  console.log('UI stub installed');
+})();
 </script>
 
 </body>
