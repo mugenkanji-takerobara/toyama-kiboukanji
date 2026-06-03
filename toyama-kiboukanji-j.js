@@ -2,7 +2,8 @@
   // 安全ガード
   const $ = id => document.getElementById(id);
 
-  /const kanjiList = ['三','五','八','九','百','千','万','億','兆'];
+　const kanjiList = ['三','五','八','九','百','千','万','億','兆'];
+
 　const bonusList = ['岳','代'];
 
   // canvas / ctx
