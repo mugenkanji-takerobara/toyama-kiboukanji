@@ -16,8 +16,8 @@ if (typeof window.loadMainGameScript !== "function") {
 
 console.log("game.js loaded");
 
-// 必要ならここで使う漢字リスト
-const kanjiList = ["日","月","山","川","木","金","土","空","海","風"];
+const kanjiList = ['三','五','八','九','百','千','万','億','兆'];
+const bonusList = ['岳','代'];
 
 // BGM フェード（使っているならこのまま）
 function updateStoryBGM(pageIndex) {
