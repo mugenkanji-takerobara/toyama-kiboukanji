@@ -3,8 +3,8 @@
   const $ = id => document.getElementById(id);
 
 　const kanjiList = ['三','五','八','九','百','千','万','億','兆'];
-
 　const bonusList = ['岳','代'];
+　document.getElementById("info").textContent = '左右スワイプで移動、下スワイプで加速。 縦か横に3つそろえて。';
 
   // canvas / ctx
   let canvas = null;
