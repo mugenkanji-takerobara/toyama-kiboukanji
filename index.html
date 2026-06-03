@@ -1292,6 +1292,56 @@ document.getElementById("lang-en").onclick = () => {
 
   console.log('UI stub installed');
 })();
+
+(function(){
+  function ensure(id, tag='div', attrs={}){
+    if(document.getElementById(id)) return document.getElementById(id);
+    const el = document.createElement(tag);
+    el.id = id;
+    if(attrs.class) el.className = attrs.class;
+    if(attrs.text) el.textContent = attrs.text;
+    document.body.appendChild(el);
+    return el;
+  }
+  // 必要な要素を最低限作る（見た目は後で調整）
+  ensure('manual-title','div',{text:'Manual'});
+  ensure('manual-text','div',{text:'説明'});
+  ensure('manual-next','button',{text:'次'});
+  ensure('manual-prev','button',{text:'前'});
+  ensure('story-next','button',{text:'次'});
+  ensure('story-prev','button',{text:'前'});
+  ensure('storyTextJP','div',{text:'物語（日本語）'});
+  ensure('wrap','div',{class:'wrap'});
+  ensure('result-score','div',{text:'0'});
+
+  // showScreen（game.js と衝突しない安全版）
+  window.showScreen = function(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+    const t = document.getElementById(id);
+    if(t) t.classList.remove('hidden');
+  };
+
+  // Start ボタンがあれば startGame を呼ぶ
+  document.getElementById('start-button')?.addEventListener('click', ()=>{
+    if(typeof window.startGame === 'function'){
+      showScreen('game-screen');
+      window.startGame();
+    } else {
+      showScreen('game-screen');
+      console.log('startGame not loaded yet');
+    }
+  });
+
+  // Manual 開閉（簡易）
+  document.getElementById('manual-button')?.addEventListener('click', ()=>{
+    const o = document.getElementById('manualOverlay') || document.createElement('div');
+    o.id = 'manualOverlay';
+    o.classList.remove('hidden');
+    document.body.appendChild(o);
+  });
+
+  console.log('UI helper installed');
+})();
 </script>
 
 </body>
