@@ -188,6 +188,65 @@ button {
   margin: 6px 0 10px;
 }
 
+/* タイトル画面のボタン共通スタイル（見た目をゴールド、文字白） */
+#title-screen .title-btn,
+.screen .gold-btn {
+  background: linear-gradient(#ffd54a,#d4a017);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  cursor: pointer;
+  /* サイズは現状維持するため幅は auto に */
+  width: auto;
+  padding: 10px 16px;
+}
+
+/* 右寄せラッパー（タイトル内のボタン群を右寄せ） */
+#title-screen .title-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* とやまの観光一覧内の説明/写真/物語ボタンもゴールドに */
+.toyama-list .action-btn,
+.detail-screen .action-btn {
+  background: linear-gradient(#ffd54a,#d4a017);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+/* 背景画像（女島など）が隠れないように z-index を調整 */
+.detail-gallery, .hero-bg {
+  position: relative;
+  z-index: 0;
+}
+.detail-img, .hero-bg img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ボタンを確実に押せるように pointer-events を有効化 */
+button, .btn {
+  pointer-events: auto;
+}
+
+/* 言語切替（右上）を非表示にする */
+#langToggle, #lang-en, #lang-ja {
+  display: none !important;
+}
+
+/* 小さな調整：押したときの見た目 */
+.title-btn:active, .gold-btn:active, .action-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.12);
+}
 </style>
 </head>
 
