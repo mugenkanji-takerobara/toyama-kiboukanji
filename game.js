@@ -1,4 +1,13 @@
-// game.js（該当部分を丸ごと置き換え）
+function loadMainGameScript(cb){
+  if(window.mainGameLoaded) return cb && cb();
+  const s = document.createElement('script');
+  s.src = 'toyama-kiboukanji-j.min.js'; // 後で minified を置く。なければ toyama-kiboukanji-j.js にする
+  s.defer = true;
+  s.onload = ()=>{ window.mainGameLoaded = true; cb && cb(); };
+  s.onerror = ()=>{ console.error('load failed', s.src); };
+  document.head.appendChild(s);
+}
+
 console.log("game.js loaded");
 const kanjiList = ["日","月","山","川","木","金","土","空","海","風"];
 
