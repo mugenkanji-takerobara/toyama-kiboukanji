@@ -1200,37 +1200,40 @@ document.getElementById("lang-en").onclick = () => {
     </div>
   </div>
 </div>
-// 2枚目以降の詳細ページ
-const iwaseMoreScreen = document.getElementById('iwaseMoreScreen');
-const yaoMoreScreen = document.getElementById('yaoMoreScreen');
-const mirageMoreScreen = document.getElementById('mirageMoreScreen');
-const toyamajoMoreScreen = document.getElementById('toyamajoMoreScreen');
+<!-- とやま詳細ページの切替 -->
+<script>
+  const toyamaScreen = document.getElementById('toyamaScreen');
 
-// ボタン → 詳細ページへ
-document.getElementById('iwaseMoreBtn')?.addEventListener('click', ()=>{
-  toyamaScreen.classList.add('hidden');
-  iwaseMoreScreen.classList.remove('hidden');
-});
+  const iwaseMoreScreen = document.getElementById('iwaseMoreScreen');
+  const yaoMoreScreen = document.getElementById('yaoMoreScreen');
+  const mirageMoreScreen = document.getElementById('mirageMoreScreen');
+  const toyamajoMoreScreen = document.getElementById('toyamajoMoreScreen');
 
-document.getElementById('yaoMoreBtn')?.addEventListener('click', ()=>{
-  toyamaScreen.classList.add('hidden');
-  yaoMoreScreen.classList.remove('hidden');
-});
+  // ボタン → 詳細ページへ
+  document.getElementById('iwaseMoreBtn')?.addEventListener('click', ()=>{
+    toyamaScreen.classList.add('hidden');
+    iwaseMoreScreen.classList.remove('hidden');
+  });
 
-document.getElementById('mirageMoreBtn')?.addEventListener('click', ()=>{
-  toyamaScreen.classList.add('hidden');
-  mirageMoreScreen.classList.remove('hidden');
-});
+  document.getElementById('yaoMoreBtn')?.addEventListener('click', ()=>{
+    toyamaScreen.classList.add('hidden');
+    yaoMoreScreen.classList.remove('hidden');
+  });
 
-document.getElementById('toyamajoMoreBtn')?.addEventListener('click', ()=>{
-  toyamaScreen.classList.add('hidden');
-  toyamajoMoreScreen.classList.remove('hidden');
-});
+  document.getElementById('mirageMoreBtn')?.addEventListener('click', ()=>{
+    toyamaScreen.classList.add('hidden');
+    mirageMoreScreen.classList.remove('hidden');
+  });
 
+  document.getElementById('toyamajoMoreBtn')?.addEventListener('click', ()=>{
+    toyamaScreen.classList.add('hidden');
+    toyamajoMoreScreen.classList.remove('hidden');
+  });
 </script>
-<script src="toyama-kiboukanji-j.js"></script>
+
+<!-- JS 読み込み順（重要） -->
 <script src="game.js"></script>
+<script src="toyama-kiboukanji-j.js"></script>
 
 </body>
 </html>
-
