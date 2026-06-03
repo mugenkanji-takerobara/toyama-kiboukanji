@@ -1229,11 +1229,25 @@ document.getElementById("lang-en").onclick = () => {
     toyamaScreen.classList.add('hidden');
     toyamajoMoreScreen.classList.remove('hidden');
   });
-</script>
 
 <!-- JS 読み込み順（重要） -->
 <script src="game.js"></script>
 <script src="toyama-kiboukanji-j.js"></script>
+<!-- 一時テスト用：外部JSが404でも画面遷移と startGame 呼び出しを確認する -->
+<script>
+  // 最低限のスタブ（既存の本体が無くても画面切替と startGame 呼び出しを試す）
+  function startGame(){ console.log('startGame stub called'); /* 実際のゲームは外部で動く */ }
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+    const t = document.getElementById(id);
+    if(t) t.classList.remove('hidden');
+  }
+  // Start ボタンの即時上書き（既存ハンドラを置き換えて切り分け）
+  document.getElementById('start-button')?.addEventListener('click', ()=>{
+    showScreen('game-screen');
+    try{ startGame(); }catch(e){ console.error(e); }
+  });
+</script>
 
 </body>
 </html>
