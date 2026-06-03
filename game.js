@@ -1,7 +1,7 @@
 function loadMainGameScript(cb){
   if(window.mainGameLoaded) return cb && cb();
   const s = document.createElement('script');
-  s.src = 'toyama-kiboukanji-j.min.js'; // 後で minified を置く。なければ toyama-kiboukanji-j.js にする
+  s.src = 'toyama-kiboukanji-j.js'; // 後で minified を置く。なければ toyama-kiboukanji-j.js にする
   s.defer = true;
   s.onload = ()=>{ window.mainGameLoaded = true; cb && cb(); };
   s.onerror = ()=>{ console.error('load failed', s.src); };
