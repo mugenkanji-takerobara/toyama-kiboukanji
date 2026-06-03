@@ -1,14 +1,17 @@
-// ===== game.js（重複を整理した版）=====
-
-// 動的読み込み（本体JS）
-function loadMainGameScript(cb){
-  if (window.mainGameLoaded) return cb && cb();
-  const s = document.createElement('script');
-  s.src = 'toyama-kiboukanji-j.js'; // 実際にあるファイル名
-  s.defer = true;
-  s.onload = () => { window.mainGameLoaded = true; cb && cb(); };
-  s.onerror = () => { console.error('load failed', s.src); cb && cb(); };
-  document.head.appendChild(s);
+// 安全な動的読み込み（重複防止・タイムアウト）
+if (typeof window.loadMainGameScript !== "function") {
+  window.loadMainGameScript = function(cb){
+    if (window.mainGameLoaded) return cb && cb();
+    if (window.loadingMainGame) return;
+    window.loadingMainGame = true;
+    const s = document.createElement('script');
+    s.src = 'toyama-kiboukanji-j.js';
+    s.async = true;
+    const to = setTimeout(()=>{ if(!window.mainGameLoaded){ window.loadingMainGame = false; console.error('load timeout', s.src); } }, 10000);
+    s.onload = () => { clearTimeout(to); window.mainGameLoaded = true; window.loadingMainGame = false; cb && cb(); };
+    s.onerror = () => { clearTimeout(to); window.loadingMainGame = false; console.error('failed to load', s.src); };
+    document.head.appendChild(s);
+  };
 }
 
 console.log("game.js loaded");
