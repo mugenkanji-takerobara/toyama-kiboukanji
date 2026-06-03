@@ -58,12 +58,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ======== ボタン ========
-    const startBtn = document.getElementById("start-button");
-    if (startBtn) startBtn.addEventListener("click", () => {
-        playBGM();
-        showScreen("game-screen");
-        startGame();
-    });
+  const startBtn = document.getElementById("start-button");
+if (startBtn) startBtn.addEventListener("click", () => {
+  // 先に重い本体を動的読み込みしてからゲーム開始
+  loadMainGameScript(() => {
+    // BGM と画面切替は読み込み後に行う
+    playBGM();
+    showScreen("game-screen");
+    if (typeof startGame === "function") startGame();
+  });
+});
 
     const manualBtn = document.getElementById("manual-button");
     if (manualBtn) manualBtn.addEventListener("click", () => {
