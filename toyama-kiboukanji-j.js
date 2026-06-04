@@ -1,4 +1,4 @@
-// toyama-kiboukanji-j.js - 統合・構文チェック済み 完全版
+  // toyama-kiboukanji-j.js - 統合・構文チェック済み 完全版
 (() => {
   // --- ヘルパー ---
   const $ = id => document.getElementById(id);
@@ -15,13 +15,44 @@
   let shamisenIntro = null;
   let bgmNormal = null;
   let bgmBonus = null;
+
   function initAudio() {
-    waveBGM = new Audio("audio/warayatakashi.mp3");waveBGM.loop = true; waveBGM.volume = 0.01; } catch(e){ waveBGM = null; }
-    try { storyBGM = new Audio("audio/shamisen_intro.mp3"); storyBGM.loop = true; storyBGM.volume = 0.02; } catch(e){ storyBGM = null; }
-    try { shamisenIntro = new Audio("audio/shamisen_intro.mp3"); shamisenIntro.volume = 0.001; } catch(e){ shamisenIntro = null; }
-    try { bgmNormal = document.getElementById("bgmNormal"); } catch(e){ bgmNormal = null; }
-    try { bgmBonus = document.getElementById("bgmBonus"); } catch(e){ bgmBonus = null; }
+    try {
+      waveBGM = new Audio("audio/warayatakashi.mp3");
+      waveBGM.loop = true;
+      waveBGM.volume = 0.01;
+    } catch(e) {
+      waveBGM = null;
+    }
+
+    try {
+      storyBGM = new Audio("audio/shamisen_intro.mp3");
+      storyBGM.loop = true;
+      storyBGM.volume = 0.02;
+    } catch(e) {
+      storyBGM = null;
+    }
+
+    try {
+      shamisenIntro = new Audio("audio/shamisen_intro.mp3");
+      shamisenIntro.volume = 0.001;
+    } catch(e) {
+      shamisenIntro = null;
+    }
+
+    try {
+      bgmNormal = document.getElementById("bgmNormal");
+    } catch(e) {
+      bgmNormal = null;
+    }
+
+    try {
+      bgmBonus = document.getElementById("bgmBonus");
+    } catch(e) {
+      bgmBonus = null;
+    }
   }
+
   function safePlay(a){ try{ a?.play?.().catch(()=>{}); }catch(e){} }
   function playNormalBGM(){ try{ bgmBonus?.pause(); bgmBonus && (bgmBonus.currentTime = 0); if(bgmNormal){ bgmNormal.volume = 0.03; bgmNormal.play().catch(()=>{}); } }catch(e){} }
   function playBonusBGM(){ try{ bgmNormal?.pause(); if(bgmBonus){ bgmBonus.volume = 0.03; bgmBonus.play().catch(()=>{}); } }catch(e){} }
