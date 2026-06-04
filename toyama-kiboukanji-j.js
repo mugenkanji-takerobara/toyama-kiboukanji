@@ -660,28 +660,74 @@
     }
     draw();
   }
-
   // --- タッチイベントワイヤ ---
-  function wireTouchHandlers(){
-    if(!canvas) return;
-    canvas.addEventListener("touchstart", e=>{
-      const t = e.touches[0];
-      touchStartX = t.clientX; touchStartY = t.clientY;
-    }, {passive:true});
-    canvas.addEventListener("touchend", e=>{
-      const t = e.changedTouches[0];
-      const dx = t.clientX - touchStartX;
-      const dy = t.clientY - touchStartY;
-      const dist = Math.hypot(dx,dy);
-      if(bonusMode && dist<20){ handleBonusTapTouch(t); return; }
-      if(!cur || gameOver || bonusMode || isPaused) return;
-      if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30){
-        if(dx>0){ if(canMove(1,0)) cur.blocks.forEach(b=>b.x++); }
-        else { if(canMove(-1,0)) cur.blocks.forEach(b=>b.x--); }
-      }else if(dy>30){ fastDrop = true; }
-      draw();
-    }, {passive:true});
-  }
+function wireTouchHandlers(){
+  if(!canvas) return;
+
+  // タッチ開始位置を記録
+  canvas.addEventListener("touchstart", e=>{
+    const t = e.touches[0];
+    touchStartX = t.clientX;
+    touchStartY = t.clientY;
+  }, {passive:true});
+
+  // タッチ終了でスワイプ判定。ボーナス処理は短距離タップで処理
+  canvas.addEventListener("touchend", e=>{
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchStartX;
+    const dy = t.clientY - touchStartY;
+    const dist = Math.hypot(dx,dy);
+
+    // ボーナスモードでの短距離タップ（選択）を優先
+    if(bonusMode && dist < 20){
+      handleBonusTapTouch(t);
+      return;
+    }
+
+    // ゲームが動いていない・操作禁止時は無視
+    if(!cur || gameOver || bonusMode || isPaused) return;
+
+    // 横スワイプで左右移動
+    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30){
+      if(dx > 0){
+        if(canMove(1,0)) cur.blocks.forEach(b=>b.x++);
+      } else {
+        if(canMove(-1,0)) cur.blocks.forEach(b=>b.x--);
+      }
+    }
+    // 下スワイプで加速落下
+    else if(dy > 30){
+      fastDrop = true;
+    }
+
+    // 最低限の再描画
+    draw();
+  }, {passive:true});
+
+  // マウス操作（PC向け）
+  canvas.addEventListener("mousedown", e=>{
+    touchStartX = e.clientX;
+    touchStartY = e.clientY;
+  }, {passive:true});
+  canvas.addEventListener("mouseup", e=>{
+    const dx = e.clientX - touchStartX;
+    const dy = e.clientY - touchStartY;
+    const dist = Math.hypot(dx,dy);
+
+    if(bonusMode && dist < 20){
+      handleBonusTapTouch(e);
+      return;
+    }
+    if(!cur || gameOver || bonusMode || isPaused) return;
+    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30){
+      if(dx > 0){ if(canMove(1,0)) cur.blocks.forEach(b=>b.x++); }
+      else { if(canMove(-1,0)) cur.blocks.forEach(b=>b.x--); }
+    } else if(dy > 30){
+      fastDrop = true;
+    }
+    draw();
+  }, {passive:true});
+}
 
   function canMove(mx,my){
     return cur.blocks.every(b=>{
