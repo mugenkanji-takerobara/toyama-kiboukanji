@@ -107,13 +107,6 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen('storyScreen');
     if (typeof loadStoryPage === 'function') loadStoryPage(0);
   });
-
-  // 戻るボタン
-  const backBtn = document.getElementById('back-to-game');
-  if (backBtn) backBtn.addEventListener('click', () => {
-    console.log('戻る click');
-    showScreen('title-screen');
-  });
 　// タイトル画面では戻るボタンを隠す
 const backBtn = document.getElementById("back-button");
 if(backBtn){
