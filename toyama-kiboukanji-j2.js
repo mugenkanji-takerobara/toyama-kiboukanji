@@ -877,7 +877,20 @@ $('start-button')?.addEventListener('click', ()=>{
   // loop が定義済みなら起動、未定義なら遅延フラグを立てる
   if(typeof loop === 'function'){
     console.log('Starting loop now');
+    
     requestAnimationFrame(loop);
+}   // ← この1行を追加する
+
+// loop が後で起動を待っている場合に開始する
+if (window._startLoopWhenReady) {
+  window._startLoopWhenReady = false;
+  window._gameLoopStarted = true;
+  requestAnimationFrame(loop);
+}
+
+})();
+
+    
   } else {
     console.warn('loop is not defined yet; will start when loop is defined');
     window._startLoopWhenReady = true;
