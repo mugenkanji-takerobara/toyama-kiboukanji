@@ -145,19 +145,22 @@ function resizeCanvas(){
     showComboEffect(fkCombo, bonus);
   }
   function onFkClick(e){
-    if(!canvas) return;
-    const rect = canvas.getBoundingClientRect();
-    const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-    const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
-    for(let i=0;i<fallingKanji.length;i++){
-      const k = fallingKanji[i];
-      if(x >= k.x - 10 && x <= k.x + 50 && y >= k.y - 50 && y <= k.y + 10){
-        addFkScore(10);
-        fallingKanji.splice(i,1);
-        break;
-      }
+  if(!canvas) return;
+  const rect = canvas.getBoundingClientRect();
+  const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+  const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+  for(let i=0;i<fallingKanji.length;i++){
+    const k = fallingKanji[i];
+    const dx = x - (k.x + 20);
+    const dy = y - (k.y - 20);
+    if(Math.abs(dx) < 30 && Math.abs(dy) < 30){
+      fallingKanji.splice(i,1);
+      addFkScore(10);
+      break;
     }
   }
+}
 
   // --- 共通 HUD 更新 ---
   setInterval(()=>{ const sd = $('score-display'); const td = $('time-display'); if(sd) sd.textContent = fkScore; if(td) td.textContent = fkTimeLeft; }, 100);
