@@ -114,6 +114,15 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log('戻る click');
     showScreen('title-screen');
   });
+　// タイトル画面では戻るボタンを隠す
+const backBtn = document.getElementById("back-button");
+if(backBtn){
+  const observer = new MutationObserver(()=>{
+    const isTitle = document.getElementById("title-screen")?.classList.contains("active");
+    backBtn.style.display = isTitle ? "none" : "block";
+  });
+  observer.observe(document.body, {attributes:true, subtree:true});
+}
 
   // ======== 三味線（必要なら） ========
   function playShamisenTimed() {
