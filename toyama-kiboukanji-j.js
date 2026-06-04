@@ -1,7 +1,5 @@
   // toyama-kiboukanji-j.js - 統合・構文チェック済み 完全版
 (() => {
-// temporary stub to avoid ReferenceError until real function is placed
-function resizeCanvas(){ return; }
 
   const $ = id => document.getElementById(id);
 
@@ -62,6 +60,14 @@ function wireTouchHandlers(){ return; }
   function playNormalBGM(){ try{ bgmBonus?.pause(); bgmBonus && (bgmBonus.currentTime = 0); if(bgmNormal){ bgmNormal.volume = 0.03; bgmNormal.play().catch(()=>{}); } }catch(e){} }
   function playBonusBGM(){ try{ bgmNormal?.pause(); if(bgmBonus){ bgmBonus.volume = 0.03; bgmBonus.play().catch(()=>{}); } }catch(e){} }
   function stopAllBGM(){ try{ bgmNormal?.pause(); bgmBonus?.pause(); waveBGM?.pause(); storyBGM?.pause(); shamisenIntro?.pause(); }catch(e){} }
+ // --- 画面スケール調整（必ずここに置く） ---
+function resizeCanvas(){
+  const wrap = document.getElementById("wrap");
+  if(!wrap) return;
+  const scale = Math.min(window.innerWidth/360, window.innerHeight/720);
+  wrap.style.transform = `scale(${scale})`;
+  wrap.style.transformOrigin = "top center";
+}
 
   // --- 画面管理 ---
   function hideAllScreens(){
