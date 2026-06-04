@@ -1,6 +1,8 @@
   // toyama-kiboukanji-j.js - 統合・構文チェック済み 完全版
 (() => {
-  // --- ヘルパー ---
+// temporary stub to avoid ReferenceError until real function is placed
+function resizeCanvas(){ return; }
+
   const $ = id => document.getElementById(id);
 
   // --- 基本データ ---
