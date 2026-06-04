@@ -738,23 +738,41 @@ if (typeof wireTouchHandlers === 'function') {
 }
 
   // --- Start ボタン（安全版） ---
-  $('start-button')?.addEventListener('click', ()=>{
-    if(window._gameLoopStarted) return;
+$('start-button')?.addEventListener('click', ()=>{
+  console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
 
-    showScreen('game-screen');
+  if(window._gameLoopStarted) return;
 
-    try{ safePlay(waveBGM); }catch(e){}
+  // 画面切替
+  showScreen('game-screen');
 
-    try{
-      if(typeof startFkGame === 'function') startFkGame();
-      if(typeof resetGame === 'function') resetGame();
-    }catch(e){ console.error(e); }
+  // BGM（安全再生）
+  try{ safePlay(waveBGM); }catch(e){}
 
-    started = true;
-    window._gameLoopStarted = true;
+  // ゲーム固有の初期化（存在すれば）
+  try{
+    if(typeof startFkGame === 'function') startFkGame();
+    if(typeof resetGame === 'function') resetGame();
+  }catch(e){ console.error(e); }
 
+  // グローバルフラグで管理（Console からも見える）
+  window._gameLoopStarted = true;
+
+  // loop が定義済みなら起動、未定義なら遅延フラグを立てる
+  if(typeof loop === 'function'){
+    console.log('Starting loop now');
     requestAnimationFrame(loop);
-  });
+  } else {
+    console.warn('loop is not defined yet; will start when loop is defined');
+    window._startLoopWhenReady = true;
+  }
+});
+// loop が後で定義される場合の遅延起動処理
+if(window._startLoopWhenReady){
+  window._startLoopWhenReady = false;
+  window._gameLoopStarted = true;
+  requestAnimationFrame(loop);
+}
 
   // --- 他のボタン ---
   $('manual-button')?.addEventListener('click', ()=>{ $('manualOverlay')?.classList.remove('hidden'); loadManualPage(0); });
