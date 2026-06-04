@@ -16,6 +16,9 @@
   let bgmNormal = null;
   let bgmBonus = null;
 
+  // placeholder to avoid ReferenceError until real function is loaded
+function wireTouchHandlers(){ return; }
+
   function initAudio() {
     try {
       waveBGM = new Audio("audio/warayatakashi.mp3");
