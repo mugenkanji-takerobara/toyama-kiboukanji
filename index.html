@@ -247,6 +247,52 @@ button, .btn {
   transform: translateY(1px);
   box-shadow: 0 2px 0 rgba(0,0,0,0.12);
 }
+<style>
+/* タイトル画面：右端に縦並びで中央寄せ */
+#title-screen { position: relative; overflow: visible; }
+#title-screen .title-btn-wrap {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  z-index: 2; /* 背景より上、全画面オーバーレイより下にしたければ 1 に調整 */
+}
+
+/* ゴールドボタン（既存サイズ維持、文字白） */
+.title-btn, .gold-btn, .action-btn {
+  background: linear-gradient(#ffd54a,#d4a017);
+  color: #fff !important;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  padding: 10px 16px;
+  cursor: pointer;
+  width: auto;
+  pointer-events: auto;
+}
+
+/* 背景画像領域を確保 */
+.hero-bg, .detail-gallery { position: relative; z-index: 0; }
+.hero-bg img, .detail-img { display:block; width:100%; height:auto; object-fit:cover; }
+
+/* 透明オーバーレイがボタンを奪っている場合の保険 */
+.overlay, .modal-backdrop, .blocker {
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* 言語切替を完全に隠す（必要なら） */
+#langToggle, #lang-en, #lang-ja, #btnEN, #btnJP { display:none !important; }
+
+/* 軽微な押下エフェクト */
+.title-btn:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(0,0,0,0.12); }
+
 </style>
 </head>
 
