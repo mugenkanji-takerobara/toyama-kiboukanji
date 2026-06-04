@@ -705,6 +705,9 @@ function resizeCanvas(){
  document.addEventListener('DOMContentLoaded', ()=>{
 
   initAudio();
+    try{ waveBGM?.pause(); waveBGM && (waveBGM.currentTime = 0); }catch(e){}
+try{ storyBGM?.pause(); storyBGM && (storyBGM.currentTime = 0); }catch(e){}
+try{ shamisenIntro?.pause(); shamisenIntro && (shamisenIntro.currentTime = 0); }catch(e){}
 
   // --- canvas 初期化 ---
   canvas = $('game-canvas') || $('c') || document.querySelector('canvas');
