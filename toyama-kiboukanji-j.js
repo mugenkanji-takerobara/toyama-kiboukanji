@@ -856,10 +856,11 @@ function loop(timestamp){
 
   requestAnimationFrame(loop);
 }
-  // loop が後で起動を待っている場合に開始する
-if(window._startLoopWhenReady){
+// loop が後で起動を待っている場合に開始する
+if (window._startLoopWhenReady) {
   window._startLoopWhenReady = false;
   window._gameLoopStarted = true;
   requestAnimationFrame(loop);
-  })();
+}
 
+})();
