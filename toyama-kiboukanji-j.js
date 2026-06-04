@@ -820,6 +820,33 @@ $('start-button')?.addEventListener('click', ()=>{
   // --- リサイズ ---
   resizeCanvas();
 });
+  // --- メイン描画ループ（board mode） ---
+function loop(timestamp){
+  // timestamp may be undefined on first call; guard with lastFallTime
+  if(typeof lastFallTime === 'undefined') lastFallTime = 0;
+
+  if(started && !gameOver && !isPaused){
+    const interval = fastDrop ? Math.max(50, Math.floor(fallInterval/5)) : fallInterval;
+    if(!lastFallTime) lastFallTime = timestamp || performance.now();
+    if((timestamp || performance.now()) - lastFallTime >= interval){
+      lastFallTime = timestamp || performance.now();
+      // stepFall should exist; if not, guard
+      if(typeof stepFall === 'function') stepFall();
+      fastDrop = false;
+    }
+  }
+
+  // 必ず描画（draw が存在する前提）
+  if(typeof draw === 'function') draw();
+
+  requestAnimationFrame(loop);
+}
+  // loop が後で起動を待っている場合に開始する
+if(window._startLoopWhenReady){
+  window._startLoopWhenReady = false;
+  window._gameLoopStarted = true;
+  requestAnimationFrame(loop);
+}
 
   })();
 
