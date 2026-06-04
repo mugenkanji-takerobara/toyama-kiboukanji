@@ -749,22 +749,21 @@ function wireTouchHandlers(){
     cancelBtn.onclick = ()=>{ close(); callback(false); };
     dialog.style.display = 'flex';
   }
-
   // --- メイン描画ループ（board mode） ---
-  function loop(timestamp){
-    if(started && !gameOver && !isPaused){
-      const interval = fastDrop ? fallInterval/5 : fallInterval;
-      if(timestamp - lastFallTime >= interval){
-        lastFallTime = timestamp;
-        stepFall();
-        fastDrop = false;
-      }
+function loop(timestamp){
+  if(started && !gameOver && !isPaused){
+    const interval = fastDrop ? fallInterval/5 : fallInterval;
+    if(timestamp - lastFallTime >= interval){
+      lastFallTime = timestamp;
+      stepFall();
+      fastDrop = false;
     }
-    draw();
-    requestAnimationFrame(loop);
   }
-
-  // --- スコア保存補助（外部呼び出し互換） ---
+  draw();
+  // ※ 自動で再起動するが、最初の呼び出しは Start ボタンで行う
+  requestAnimationFrame(loop);
+}
+    // --- スコア保存補助（外部呼び出し互換） ---
   function saveScore(scoreVal){
     try{
       const arr = loadScores();
