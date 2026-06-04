@@ -861,7 +861,5 @@ if(window._startLoopWhenReady){
   window._startLoopWhenReady = false;
   window._gameLoopStarted = true;
   requestAnimationFrame(loop);
-}
-
   })();
 
