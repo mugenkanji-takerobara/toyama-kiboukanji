@@ -16,7 +16,7 @@
   let bgmNormal = null;
   let bgmBonus = null;
   function initAudio() {
-    try { waveBGM = new Audio("audio/wave.mp3"); waveBGM.loop = true; waveBGM.volume = 0.01; } catch(e){ waveBGM = null; }
+    waveBGM = new Audio("audio/warayatakashi.mp3");waveBGM.loop = true; waveBGM.volume = 0.01; } catch(e){ waveBGM = null; }
     try { storyBGM = new Audio("audio/shamisen_intro.mp3"); storyBGM.loop = true; storyBGM.volume = 0.02; } catch(e){ storyBGM = null; }
     try { shamisenIntro = new Audio("audio/shamisen_intro.mp3"); shamisenIntro.volume = 0.001; } catch(e){ shamisenIntro = null; }
     try { bgmNormal = document.getElementById("bgmNormal"); } catch(e){ bgmNormal = null; }
