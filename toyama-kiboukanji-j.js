@@ -739,7 +739,6 @@ if (typeof wireTouchHandlers === 'function') {
 } else {
   console.warn('wireTouchHandlers not defined; skipping touch wiring');
 }
-
   // --- Start ボタン（安全版） ---
 $('start-button')?.addEventListener('click', ()=>{
   console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
@@ -760,6 +759,7 @@ $('start-button')?.addEventListener('click', ()=>{
 
   // グローバルフラグで管理（Console からも見える）
   window._gameLoopStarted = true;
+  window.started = true;
 
   // loop が定義済みなら起動、未定義なら遅延フラグを立てる
   if(typeof loop === 'function'){
@@ -770,14 +770,7 @@ $('start-button')?.addEventListener('click', ()=>{
     window._startLoopWhenReady = true;
   }
 });
-// loop が後で定義される場合の遅延起動処理
-if(window._startLoopWhenReady){
-  window._startLoopWhenReady = false;
-  window._gameLoopStarted = true;
-  requestAnimationFrame(loop);
-}
-
-  // --- 他のボタン ---
+  // ---他のボタン ---
   $('manual-button')?.addEventListener('click', ()=>{ $('manualOverlay')?.classList.remove('hidden'); loadManualPage(0); });
   $('manual-next')?.addEventListener('click', ()=> loadManualPage(currentManualPage + 1));
   $('manual-prev')?.addEventListener('click', ()=> loadManualPage(currentManualPage - 1));
