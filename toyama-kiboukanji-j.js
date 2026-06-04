@@ -173,6 +173,7 @@ function loop(timestamp){
   if(typeof draw === 'function') draw();
   requestAnimationFrame(loop);
 }
+  })();  // ← これで閉じる
   // --- 共通 HUD 更新 ---
   setInterval(()=>{ const sd = $('score-display'); const td = $('time-display'); if(sd) sd.textContent = fkScore; if(td) td.textContent = fkTimeLeft; }, 100);
 
