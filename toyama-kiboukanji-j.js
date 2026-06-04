@@ -714,9 +714,17 @@
       }
     });
   }
-
-  // --- タッチ操作 ---
-  wireTouchHandlers();
+    // --- タッチ操作 ---
+// 安全に呼び出す（未定義ならスキップ）
+if (typeof wireTouchHandlers === 'function') {
+  try {
+    wireTouchHandlers();
+  } catch (e) {
+    console.error('wireTouchHandlers error', e);
+  }
+} else {
+  console.warn('wireTouchHandlers not defined; skipping touch wiring');
+}
 
   // --- Start ボタン（安全版） ---
   $('start-button')?.addEventListener('click', ()=>{
