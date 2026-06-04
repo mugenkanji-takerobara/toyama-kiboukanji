@@ -813,12 +813,31 @@ function loop(timestamp){
     wrap.style.transformOrigin = "top center";
   }
   window.addEventListener("resize", resizeCanvas);
+      // Start ボタン：一度だけループを開始する（重複防止）
+$('start-button')?.addEventListener('click', ()=>{
+  // 既に開始済みなら何もしない
+  if(window._gameLoopStarted) return;
 
-  // --- 初期化とイベントワイヤ ---
-  document.addEventListener('DOMContentLoaded', ()=>{
-    initAudio();
+  // UI 切替
+  showScreen('game-screen');
 
-    // canvas: prefer #game-canvas then #c
+  // BGM 再生（安全）
+  try{ safePlay(waveBGM); }catch(e){}
+
+  // ゲーム初期化（あなたのゲームに合わせて）
+  try{
+    if(typeof startFkGame === 'function') startFkGame();
+    if(typeof resetGame === 'function') resetGame();
+  }catch(e){ console.error(e); }
+
+  // フラグ
+  started = true;
+  window._gameLoopStarted = true;
+
+  // ループ開始（最初の一回）
+  requestAnimationFrame(loop);
+});
+
     canvas = $('game-canvas') || $('c') || document.querySelector('canvas');
     if(canvas){
       ctx = canvas.getContext('2d');
