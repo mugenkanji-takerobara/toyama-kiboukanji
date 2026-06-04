@@ -691,207 +691,99 @@
     }
     draw();
   }
-  // --- タッチイベントワイヤ ---
-function wireTouchHandlers(){
-  if(!canvas) return;
+ document.addEventListener('DOMContentLoaded', ()=>{
 
-  // タッチ開始位置を記録
-  canvas.addEventListener("touchstart", e=>{
-    const t = e.touches[0];
-    touchStartX = t.clientX;
-    touchStartY = t.clientY;
-  }, {passive:true});
+  initAudio();
 
-  // タッチ終了でスワイプ判定。ボーナス処理は短距離タップで処理
-  canvas.addEventListener("touchend", e=>{
-    const t = e.changedTouches[0];
-    const dx = t.clientX - touchStartX;
-    const dy = t.clientY - touchStartY;
-    const dist = Math.hypot(dx,dy);
+  // --- canvas 初期化 ---
+  canvas = $('game-canvas') || $('c') || document.querySelector('canvas');
+  if(canvas){
+    ctx = canvas.getContext('2d');
+    canvas.width = canvas.clientWidth || 360;
+    canvas.height = canvas.clientHeight || 640;
 
-    // ボーナスモードでの短距離タップ（選択）を優先
-    if(bonusMode && dist < 20){
-      handleBonusTapTouch(t);
-      return;
-    }
+    canvas.addEventListener('click', onFkClick);
+    canvas.addEventListener('touchstart', onFkClick, {passive:true});
 
-    // ゲームが動いていない・操作禁止時は無視
-    if(!cur || gameOver || bonusMode || isPaused) return;
-
-    // 横スワイプで左右移動
-    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30){
-      if(dx > 0){
-        if(canMove(1,0)) cur.blocks.forEach(b=>b.x++);
-      } else {
-        if(canMove(-1,0)) cur.blocks.forEach(b=>b.x--);
+    canvas.addEventListener('click', (e)=>{
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor((e.clientX - rect.left - OFFSET_X) / SIZE);
+      const y = Math.floor((e.clientY - rect.top - OFFSET_Y) / SIZE);
+      if(x>=0 && x<COLS && y>=0 && y<ROWS){
+        selectedCell = {x,y};
       }
-    }
-    // 下スワイプで加速落下
-    else if(dy > 30){
-      fastDrop = true;
-    }
-
-    // 最低限の再描画
-    draw();
-  }, {passive:true});
-
-  // マウス操作（PC向け）
-  canvas.addEventListener("mousedown", e=>{
-    touchStartX = e.clientX;
-    touchStartY = e.clientY;
-  }, {passive:true});
-  canvas.addEventListener("mouseup", e=>{
-    const dx = e.clientX - touchStartX;
-    const dy = e.clientY - touchStartY;
-    const dist = Math.hypot(dx,dy);
-
-    if(bonusMode && dist < 20){
-      handleBonusTapTouch(e);
-      return;
-    }
-    if(!cur || gameOver || bonusMode || isPaused) return;
-    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30){
-      if(dx > 0){ if(canMove(1,0)) cur.blocks.forEach(b=>b.x++); }
-      else { if(canMove(-1,0)) cur.blocks.forEach(b=>b.x--); }
-    } else if(dy > 30){
-      fastDrop = true;
-    }
-    draw();
-  }, {passive:true});
-}
-
-  function canMove(mx,my){
-    return cur.blocks.every(b=>{
-      const nx = b.x + mx;
-      const ny = b.y + my;
-      if(nx<0 || nx>=COLS || ny>=ROWS) return false;
-      if(board[ny][nx]) return false;
-      return true;
     });
   }
 
-  // --- ボーナスダイアログ（安全） ---
-  function showBonusDialog(message, callback){
-    const dialog = $('bonusDialog'); const text = $('bonusDialogText'); const okBtn = $('bonusOkBtn'); const cancelBtn = $('bonusCancelBtn');
-    if(!dialog || !text || !okBtn || !cancelBtn){ callback(false); return; }
-    text.textContent = message;
-    const close = ()=>{ dialog.style.display = 'none'; okBtn.onclick = null; cancelBtn.onclick = null; };
-    okBtn.onclick = ()=>{ close(); callback(true); };
-    cancelBtn.onclick = ()=>{ close(); callback(false); };
-    dialog.style.display = 'flex';
-  }
-  // --- メイン描画ループ（board mode） ---
-function loop(timestamp){
-  if(started && !gameOver && !isPaused){
-    const interval = fastDrop ? fallInterval/5 : fallInterval;
-    if(timestamp - lastFallTime >= interval){
-      lastFallTime = timestamp;
-      stepFall();
-      fastDrop = false;
-    }
-  }
-  draw();
-  // ※ 自動で再起動するが、最初の呼び出しは Start ボタンで行う
-  requestAnimationFrame(loop);
-}
-    // --- スコア保存補助（外部呼び出し互換） ---
-  function saveScore(scoreVal){
+  // --- タッチ操作 ---
+  wireTouchHandlers();
+
+  // --- Start ボタン（安全版） ---
+  $('start-button')?.addEventListener('click', ()=>{
+    if(window._gameLoopStarted) return;
+
+    showScreen('game-screen');
+
+    try{ safePlay(waveBGM); }catch(e){}
+
     try{
-      const arr = loadScores();
-      arr.unshift({score:scoreVal, date: new Date().toLocaleString()});
-      arr.sort((a,b)=>b.score-a.score);
-      localStorage.setItem(SCORE_KEY, JSON.stringify(arr.slice(0,10)));
-    }catch(e){}
-  }
+      if(typeof startFkGame === 'function') startFkGame();
+      if(typeof resetGame === 'function') resetGame();
+    }catch(e){ console.error(e); }
 
-  // --- 画面スケール調整 ---
-  function resizeCanvas(){
-    const wrap = document.getElementById("wrap");
-    if(!wrap) return;
-    const scale = Math.min(window.innerWidth/360, window.innerHeight/720);
-    wrap.style.transform = `scale(${scale})`;
-    wrap.style.transformOrigin = "top center";
-  }
-  window.addEventListener("resize", resizeCanvas);
-      // Start ボタン：一度だけループを開始する（重複防止）
-$('start-button')?.addEventListener('click', ()=>{
-  // 既に開始済みなら何もしない
-  if(window._gameLoopStarted) return;
+    started = true;
+    window._gameLoopStarted = true;
 
-  // UI 切替
-  showScreen('game-screen');
-
-  // BGM 再生（安全）
-  try{ safePlay(waveBGM); }catch(e){}
-
-  // ゲーム初期化（あなたのゲームに合わせて）
-  try{
-    if(typeof startFkGame === 'function') startFkGame();
-    if(typeof resetGame === 'function') resetGame();
-  }catch(e){ console.error(e); }
-
-  // フラグ
-  started = true;
-  window._gameLoopStarted = true;
-
-  // ループ開始（最初の一回）
-  requestAnimationFrame(loop);
-});
-
-    canvas = $('game-canvas') || $('c') || document.querySelector('canvas');
-    if(canvas){
-      ctx = canvas.getContext('2d');
-      canvas.width = canvas.clientWidth || 360;
-      canvas.height = canvas.clientHeight || 640;
-      canvas.addEventListener('click', onFkClick);
-      canvas.addEventListener('touchstart', onFkClick, {passive:true});
-      canvas.addEventListener('click', (e)=>{
-        // board-mode click for selecting cells
-        const rect = canvas.getBoundingClientRect();
-        const x = Math.floor((e.clientX - rect.left - OFFSET_X) / SIZE);
-        const y = Math.floor((e.clientY - rect.top - OFFSET_Y) / SIZE);
-        if(x>=0 && x<COLS && y>=0 && y<ROWS){
-          selectedCell = {x,y};
-        }
-      });
-    }
-
-    $('manual-button')?.addEventListener('click', ()=>{ $('manualOverlay')?.classList.remove('hidden'); loadManualPage(0); });
-    $('manual-next')?.addEventListener('click', ()=> loadManualPage(currentManualPage + 1));
-    $('manual-prev')?.addEventListener('click', ()=> loadManualPage(currentManualPage - 1));
-    $('close-manual')?.addEventListener('click', ()=> $('manualOverlay')?.classList.add('hidden'));
-    $('toyama-button')?.addEventListener('click', ()=> showScreen('toyamaScreen'));
-    $('back-to-game')?.addEventListener('click', ()=> showScreen('game-screen'));
-    $('back-to-title')?.addEventListener('click', ()=> { showScreen('title-screen'); try{ waveBGM?.pause(); waveBGM.currentTime = 0; }catch(e){} });
-    $('story-next')?.addEventListener('click', ()=> updateStoryBGM(1));
-    $('story-prev')?.addEventListener('click', ()=> updateStoryBGM(0));
-    $('langToggle')?.addEventListener('click', ()=> setLang(currentLang === 'jp' ? 'en' : 'jp'));
-
-    // transient auto
-    setTimeout(()=> showTransient(5000), 2000);
-    setInterval(()=> showTransient(4000 + Math.floor(Math.random()*3000)), 30000);
-    ['click','touchstart','mousemove'].forEach(ev=> window.addEventListener(ev, ()=> showTransient(5000), {passive:true}));
-
-    // ensure HUD
-    if(!$('score-display')){ const sd = document.createElement('div'); sd.id='score-display'; sd.style.display='none'; document.body.appendChild(sd); }
-    if(!$('time-display')){ const td = document.createElement('div'); td.id='time-display'; td.style.display='none'; document.body.appendChild(td); }
-
-    // wire toyama details (safe)
-    $('iwaseSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('iwaseDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
-    $('yaoSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('yaoDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
-    $('sciSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('sciDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
-    $('toyamajoSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('toyamajoDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
-    $('mirageSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('mirageDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
-
-    // initial screen
-    showScreen('title-screen');
-
-    // resize
-    resizeCanvas();
+    requestAnimationFrame(loop);
   });
 
-  // --- 外部公開 ---
-  window.startGame = startFkGame;
-  window.showScreen = showScreen;
-  window._toyama_kiboukanji_loaded = true;
-})();
+  // --- 他のボタン ---
+  $('manual-button')?.addEventListener('click', ()=>{ $('manualOverlay')?.classList.remove('hidden'); loadManualPage(0); });
+  $('manual-next')?.addEventListener('click', ()=> loadManualPage(currentManualPage + 1));
+  $('manual-prev')?.addEventListener('click', ()=> loadManualPage(currentManualPage - 1));
+  $('close-manual')?.addEventListener('click', ()=> $('manualOverlay')?.classList.add('hidden'));
+
+  $('toyama-button')?.addEventListener('click', ()=> showScreen('toyamaScreen'));
+  $('back-to-game')?.addEventListener('click', ()=> showScreen('game-screen'));
+  $('back-to-title')?.addEventListener('click', ()=> {
+    showScreen('title-screen');
+    try{ waveBGM?.pause(); waveBGM.currentTime = 0; }catch(e){}
+  });
+
+  $('story-next')?.addEventListener('click', ()=> updateStoryBGM(1));
+  $('story-prev')?.addEventListener('click', ()=> updateStoryBGM(0));
+
+  $('langToggle')?.addEventListener('click', ()=> setLang(currentLang === 'jp' ? 'en' : 'jp'));
+
+  // --- transient ---
+  setTimeout(()=> showTransient(5000), 2000);
+  setInterval(()=> showTransient(4000 + Math.floor(Math.random()*3000)), 30000);
+  ['click','touchstart','mousemove'].forEach(ev=> window.addEventListener(ev, ()=> showTransient(5000), {passive:true}));
+
+  // --- HUD ---
+  if(!$('score-display')){
+    const sd = document.createElement('div');
+    sd.id='score-display';
+    sd.style.display='none';
+    document.body.appendChild(sd);
+  }
+  if(!$('time-display')){
+    const td = document.createElement('div');
+    td.id='time-display';
+    td.style.display='none';
+    document.body.appendChild(td);
+  }
+
+  // --- とやま詳細 ---
+  $('iwaseSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('iwaseDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
+  $('yaoSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('yaoDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
+  $('sciSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('sciDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
+  $('toyamajoSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('toyamajoDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
+  $('mirageSpotBtn')?.addEventListener('click', ()=> { $('toyamaScreen')?.classList.add('hidden'); $('mirageDetailScreen')?.classList.remove('hidden'); showTransient(3500); });
+
+  // --- 初期画面 ---
+  showScreen('title-screen');
+
+  // --- リサイズ ---
+  resizeCanvas();
+});
