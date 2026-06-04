@@ -806,14 +806,6 @@ function loop(timestamp){
       });
     }
 
-    // wire UI buttons (safe)
-    $('start-button')?.addEventListener('click', ()=>{
-      try{ safePlay(waveBGM); }catch(e){}
-      showScreen('game-screen');
-      startFkGame();
-      started = true;
-      requestAnimationFrame(loop);
-    });
     $('manual-button')?.addEventListener('click', ()=>{ $('manualOverlay')?.classList.remove('hidden'); loadManualPage(0); });
     $('manual-next')?.addEventListener('click', ()=> loadManualPage(currentManualPage + 1));
     $('manual-prev')?.addEventListener('click', ()=> loadManualPage(currentManualPage - 1));
