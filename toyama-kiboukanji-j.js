@@ -161,7 +161,18 @@ function resizeCanvas(){
     }
   }
 }
+  function stepFall(){ /* 必要なら後で本物に差し替え */ }
 
+function draw(){
+  if(!ctx || !canvas) return;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+function loop(timestamp){
+  if(typeof stepFall === 'function') stepFall();
+  if(typeof draw === 'function') draw();
+  requestAnimationFrame(loop);
+}
   // --- 共通 HUD 更新 ---
   setInterval(()=>{ const sd = $('score-display'); const td = $('time-display'); if(sd) sd.textContent = fkScore; if(td) td.textContent = fkTimeLeft; }, 100);
 
