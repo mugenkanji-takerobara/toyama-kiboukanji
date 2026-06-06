@@ -554,3 +554,545 @@
     ctx.fillText('SCORE ' + gameScore, 10, 10);
     drawNextPieces();
     if (!started) drawTitleOverlay();
+     if (gameOver) drawGameOverOverlay();
+    if (isPaused && !gameOver && started) drawPauseOverlay();
+    if (bonusMode) {
+      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.fillRect(20, 260, 320, 140);
+      ctx.fillStyle = 'white';
+      ctx.font = '20px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText('ボーナス発動！ [' + bonusMode + ']', 40, 295);
+      ctx.font = '16px sans-serif';
+      if (bonusMode === '岳') {
+        ctx.fillText('消したい漢字をタップ！！！', 40, 325);
+        ctx.fillText('のこり ' + bonusRemaining + ' 漢字', 80, 350);
+      } else if (bonusMode === '代') {
+        ctx.fillText('入れ替えたい漢字をタップ！！！', 40, 325);
+        ctx.fillText('のこり ' + bonusRemaining + ' 回', 80, 350);
+      }
+    }
+  }
+
+  // --- スコア保存 ---
+  function getTodayString() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = (d.getMonth() + 1).toString().padStart(2, '0');
+    const day = d.getDate().toString().padStart(2, '0');
+    return `${y}${m}${day}`;
+  }
+
+  function loadScores() {
+    try {
+      const s = localStorage.getItem(SCORE_KEY);
+      if (!s) return [];
+      const arr = JSON.parse(s);
+      if (Array.isArray(arr)) return arr;
+      return [];
+    } catch (e) {
+     return [];
+    }
+  }
+
+  function saveScores(arr) {
+    localStorage.setItem(SCORE_KEY, JSON.stringify(arr));
+  }
+
+  function updateScores() {
+    const arr = loadScores();
+    arr.push({ score: gameScore, date: getTodayString() });
+    arr.sort((a, b) => b.score - a.score);
+    const top3 = arr.slice(0, 3);
+    saveScores(top3);
+  }
+
+  function resetRecords() {
+    if (confirm('記録を全て消しますか？')) {
+      localStorage.removeItem(SCORE_KEY);
+    }
+  }
+
+  // --- ゲーム盤面操作 ---
+  function resetBoard() {
+    board = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+  }
+
+  function resetGame() {
+    resetBoard();
+    gameScore = 0;
+    chainCount = 0;
+    gameOver = false;
+    bonusMode = null;
+    bonusRemaining = 0;
+    selectedCell = null;
+    cur = null;
+     next1 = new Piece(level === 'hard');
+    next2 = new Piece(level === 'hard');
+    lastFallTime = performance.now();
+  }
+
+  function spawnPiece() {
+    cur = next1;
+    next1 = next2;
+    next2 = new Piece(level === 'hard');
+    for (const b of cur.blocks) {
+      if (board[0][b.x]) {
+        gameOver = true;
+        stopAllBGM();
+        document.getElementById('restartBtn')?.classList.remove('hidden');
+        updateScores();
+        return;
+      }
+    }
+  }
+
+  function stepFall() {
+    if (isPaused) return;
+    if (gameOver || bonusMode) return;
+    if (!cur) {
+      spawnPiece();
+      return;
+    }
+    cur.blocks.forEach(b => b.y++);
+    const collided = cur.blocks.some(b => b.y >= ROWS || board[b.y][b.x]);
+    if (collided) {
+      cur.blocks.forEach(b => b.y--);
+      cur.blocks.forEach(b => {
+        board[b.y][b.x] = b.type;
+      });
+      if (fastDrop) gameScore += 3;
+      fastDrop = false;
+       handleLanding();
+      cur = null;
+      if (!gameOver) spawnPiece();
+    }
+  }
+
+  function handleLanding() {
+    const result = clearMatchesAndBonus();
+    if (result.cleared > 0) {
+      chainCount++;
+      gameScore += result.cleared * 10 * chainCount;
+    } else {
+      chainCount = 0;
+    }
+    result.bonusHits.forEach(ch => {
+      triggerBonus(ch);
+    });
+    for (let j = 0; j < COLS; j++) {
+      if (board[0][j]) {
+        gameOver = true;
+        stopAllBGM();
+        document.getElementById('restartBtn')?.classList.remove('hidden');
+        break;
+      }
+    }
+  }
+
+  function clearMatchesAndBonus() {
+    let toClear = Array.from({ length: ROWS }, () => Array(COLS).fill(false));
+    let count = 0;
+    let bonusCount = { '岳': 0, '代': 0 };
+
+    // 縦
+    for (let j = 0; j < COLS; j++) {
+      let runChar = null;
+      let runStart = 0;
+      let runLen = 0;
+      for (let r = 0; r <= ROWS; r++) {
+        const t = (r < ROWS) ? board[r][j] : null;
+         if (t && t === runChar) {
+          runLen++;
+        } else {
+          if (runChar && runLen >= 3) {
+            for (let rr = runStart; rr < runStart + runLen; rr++) {
+              toClear[rr][j] = true;
+              if (bonusList.includes(runChar)) bonusCount[runChar]++;
+            }
+          }
+          runChar = t;
+          runStart = r;
+          runLen = t ? 1 : 0;
+        }
+      }
+    }
+
+    // 横
+    for (let r = 0; r < ROWS; r++) {
+      let runChar = null;
+      let runStart = 0;
+      let runLen = 0;
+      for (let j = 0; j <= COLS; j++) {
+        const t = (j < COLS) ? board[r][j] : null;
+        if (t && t === runChar) {
+          runLen++;
+        } else {
+          if (runChar && runLen >= 3) {
+            for (let jj = runStart; jj < runStart + runLen; jj++) {
+              toClear[r][jj] = true;
+              if (bonusList.includes(runChar)) bonusCount[runChar]++;
+            }
+          }
+          runChar = t;
+          runStart = j;
+         runLen = t ? 1 : 0;
+        }
+      }
+    }
+
+    for (let r = 0; r < ROWS; r++) {
+      for (let j = 0; j < COLS; j++) {
+        if (toClear[r][j]) {
+          board[r][j] = null;
+          count++;
+        }
+      }
+    }
+
+    if (count > 0) {
+      for (let j = 0; j < COLS; j++) {
+        let stack = [];
+        for (let r = ROWS - 1; r >= 0; r--) {
+          if (board[r][j]) stack.push(board[r][j]);
+        }
+        for (let r = ROWS - 1; r >= 0; r--) {
+          board[r][j] = stack.length ? stack.shift() : null;
+        }
+      }
+    }
+
+    const bonusHits = new Set();
+    for (const ch of bonusList) {
+      if (bonusCount[ch] >= 3) bonusHits.add(ch);
+    }
+
+    return { cleared: count, bonusHits };
+  }
+
+  function triggerBonus(ch) {
+    bonusMode = ch;
+    playBonusBGM();
+     if (ch === '代') {
+      bonusRemaining = 3;
+    } else if (ch === '岳') {
+      if (confirm('盤面を替えていいですか？')) {
+        shuffleBoard();
+      }
+      bonusRemaining = 0;
+      bonusMode = null;
+      playNormalBGM();
+    }
+  }
+
+  function shuffleBoard() {
+    let cells = [];
+    for (let r = 0; r < ROWS; r++) {
+      for (let j = 0; j < COLS; j++) {
+        if (board[r][j]) cells.push(board[r][j]);
+        board[r][j] = null;
+      }
+    }
+    for (let r = ROWS - 1; r >= 0; r--) {
+      for (let j = 0; j < COLS; j++) {
+        if (cells.length === 0) return;
+        const idx = Math.floor(Math.random() * cells.length);
+        board[r][j] = cells[idx];
+        cells.splice(idx, 1);
+      }
+    }
+  }
+
+  function handleBonusTapTouch(touch) {
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    const col = Math.floor((x - OFFSET_X) / SIZE);
+    const row = Math.floor((y - OFFSET_Y) / SIZE);
+    if (col < 0 || col >= COLS || row < 0 || row >= ROWS) return;
+
+    if (bonusMode === '岳') {
+    if (board[row][col]) {
+        if (confirm('この漢字を消していいですか？')) {
+          board[row][col] = null;
+          bonusRemaining--;
+          const result = clearMatchesAndBonus();
+          if (result.cleared > 0) {
+            chainCount++;
+            gameScore += result.cleared * 10 * chainCount;
+          } else {
+            chainCount = 0;
+          }
+          if (bonusRemaining <= 0) {
+            bonusMode = null;
+            playNormalBGM();
+          }
+        }
+      }
+    } else if (bonusMode === '代') {
+      if (!selectedCell) {
+        if (board[row][col]) selectedCell = { r: row, c: col };
+      } else {
+        const r1 = selectedCell.r;
+        const c1 = selectedCell.c;
+        const r2 = row;
+        const c2 = col;
+        showBonusDialog('この二つを入れ替えます', ok => {
+          if (ok) {
+            const tmp = board[r1][c1];
+            board[r1][c1] = board[r2][c2];
+            board[r2][c2] = tmp;
+            bonusRemaining--;
+            const result = clearMatchesAndBonus();
+            if (result.cleared > 0) {
+              chainCount++;
+              gameScore += result.cleared * 10 * chainCount;
+            } else {
+              chainCount = 0;
+            }
+            if (bonusRemaining <= 0) {
+              bonusMode = null;
+              playNormalBGM();
+            }
+          }
+          selectedCell = null;
+          draw();
+        });
+      }
+    }
+    draw();
+  }
+
+  // 簡易ダイアログ（本物が別にあればそちらを使う想定）
+  function showBonusDialog(msg, cb) {
+    const ok = confirm(msg);
+    cb(!!ok);
+  }
+
+  // --- コンボエフェクト ---
+  function showComboEffect(cVal, bonus) {
+    const effect = document.createElement('div');
+    effect.className = 'combo-effect';
+    effect.textContent = `${cVal} Combo! +${bonus}`;
+    Object.assign(effect.style, {
+      position: 'fixed',
+      left: '50%',
+      top: '20%',
+      transform: 'translateX(-50%)',
+      padding: '8px 12px',
+      background: 'rgba(0,0,0,0.6)',
+      color: '#fff',
+      borderRadius: '6px',
+      zIndex: 9999
+    });
+    document.body.appendChild(effect);
+     setTimeout(() => effect.remove(), 800);
+  }
+
+  // --- メイン描画ループ（board mode） ---
+  function loop(timestamp) {
+    if (typeof lastFallTime === 'undefined') lastFallTime = 0;
+
+    if (started && !gameOver && !isPaused) {
+      const interval = fastDrop ? Math.max(50, Math.floor(fallInterval / 5)) : fallInterval;
+      if (!lastFallTime) lastFallTime = timestamp || performance.now();
+      if ((timestamp || performance.now()) - lastFallTime >= interval) {
+        lastFallTime = timestamp || performance.now();
+        if (typeof stepFall === 'function') stepFall();
+        fastDrop = false;
+      }
+    }
+
+    if (typeof draw === 'function') draw();
+
+    requestAnimationFrame(loop);
+  }
+
+  // --- DOMContentLoaded ---
+  document.addEventListener('DOMContentLoaded', () => {
+    initAudio();
+    try {
+      waveBGM?.pause();
+      if (waveBGM) waveBGM.currentTime = 0;
+    } catch (e) {}
+    try {
+      storyBGM?.pause();
+      if (storyBGM) storyBGM.currentTime = 0;
+    } catch (e) {}
+    try {
+      shamisenIntro?.pause();
+      if (shamisenIntro) shamisenIntro.currentTime = 0;
+    } catch (e) {}
+
+    canvas = $('game-canvas') || $('c') || document.querySelector('canvas');
+    if (canvas) {
+      ctx = canvas.getContext('2d');
+       canvas.width = canvas.clientWidth || 360;
+      canvas.height = canvas.clientHeight || 640;
+
+      canvas.addEventListener('click', onFkClick);
+      canvas.addEventListener('touchstart', onFkClick, { passive: true });
+
+      canvas.addEventListener('click', e => {
+        const rect = canvas.getBoundingClientRect();
+        const x = Math.floor((e.clientX - rect.left - OFFSET_X) / SIZE);
+        const y = Math.floor((e.clientY - rect.top - OFFSET_Y) / SIZE);
+        if (x >= 0 && x < COLS && y >= 0 && y < ROWS) {
+          selectedCell = { x, y };
+        }
+      });
+
+      canvas.addEventListener('touchstart', e => {
+        if (e.touches && e.touches[0]) {
+          handleBonusTapTouch(e.touches[0]);
+        }
+      }, { passive: true });
+    }
+
+    if (typeof wireTouchHandlers === 'function') {
+      try {
+        wireTouchHandlers();
+      } catch (e) {
+        console.error('wireTouchHandlers error', e);
+      }
+    }
+
+    $('start-button')?.addEventListener('click', () => {
+      console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
+
+  
+      if (window._gameLoopStarted) return;
+
+      showScreen('game-screen');
+
+      try {
+        safePlay(waveBGM);
+      } catch (e) {}
+
+      try {
+        if (typeof startFkGame === 'function') startFkGame();
+        if (typeof resetGame === 'function') resetGame();
+      } catch (e) {
+        console.error(e);
+      }
+
+      window._gameLoopStarted = true;
+      window.started = true;
+
+      if (typeof loop === 'function') {
+        console.log('Starting loop now');
+        requestAnimationFrame(loop);
+      } else {
+        console.warn('loop is not defined yet; will start when loop is defined');
+        window._startLoopWhenReady = true;
+      }
+    });
+
+    $('manual-button')?.addEventListener('click', () => {
+      $('manualOverlay')?.classList.remove('hidden');
+      if (typeof loadManualPage === 'function') {
+        loadManualPage(0);
+      }
+    });
+    $('manual-next')?.addEventListener('click', () => {
+      if (typeof loadManualPage === 'function' && typeof currentManualPage !== 'undefined') {
+     loadManualPage(currentManualPage + 1);
+      }
+    });
+    $('manual-prev')?.addEventListener('click', () => {
+      if (typeof loadManualPage === 'function' && typeof currentManualPage !== 'undefined') {
+        loadManualPage(currentManualPage - 1);
+      }
+    });
+    $('close-manual')?.addEventListener('click', () => {
+      $('manualOverlay')?.classList.add('hidden');
+    });
+
+    $('toyama-button')?.addEventListener('click', () => showScreen('toyamaScreen'));
+    $('back-to-game')?.addEventListener('click', () => showScreen('game-screen'));
+    $('back-to-title')?.addEventListener('click', () => {
+      showScreen('title-screen');
+      try {
+        waveBGM?.pause();
+        if (waveBGM) waveBGM.currentTime = 0;
+      } catch (e) {}
+    });
+
+    $('story-next')?.addEventListener('click', () => {
+      if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
+    });
+    $('story-prev')?.addEventListener('click', () => {
+      if (typeof updateStoryBGM === 'function') updateStoryBGM(0);
+    });
+
+    $('langToggle')?.addEventListener('click', () => {
+      if (typeof setLang === 'function' && typeof currentLang !== 'undefined') {
+        setLang(currentLang === 'jp' ? 'en' : 'jp');
+      }
+    });
+
+    setTimeout(() => showTransient(5000), 2000);
+     setInterval(() => showTransient(4000 + Math.floor(Math.random() * 3000)), 30000);
+    ['click', 'touchstart', 'mousemove'].forEach(ev =>
+      window.addEventListener(ev, () => showTransient(5000), { passive: true })
+    );
+
+    if (!$('score-display')) {
+      const sd = document.createElement('div');
+      sd.id = 'score-display';
+      sd.style.display = 'none';
+      document.body.appendChild(sd);
+    }
+    if (!$('time-display')) {
+      const td = document.createElement('div');
+      td.id = 'time-display';
+      td.style.display = 'none';
+      document.body.appendChild(td);
+    }
+
+    $('iwaseSpotBtn')?.addEventListener('click', () => {
+      $('toyamaScreen')?.classList.add('hidden');
+      $('iwaseDetailScreen')?.classList.remove('hidden');
+      showTransient(3500);
+    });
+    $('yaoSpotBtn')?.addEventListener('click', () => {
+      $('toyamaScreen')?.classList.add('hidden');
+      $('yaoDetailScreen')?.classList.remove('hidden');
+      showTransient(3500);
+    });
+    $('sciSpotBtn')?.addEventListener('click', () => {
+      $('toyamaScreen')?.classList.add('hidden');
+      $('sciDetailScreen')?.classList.remove('hidden');
+      showTransient(3500);
+    });
+    $('toyamajoSpotBtn')?.addEventListener('click', () => {
+      $('toyamaScreen')?.classList.add('hidden');
+      $('toyamajoDetailScreen')?.classList.remove('hidden');
+        showTransient(3500);
+    });
+    $('mirageSpotBtn')?.addEventListener('click', () => {
+      $('toyamaScreen')?.classList.add('hidden');
+      $('mirageDetailScreen')?.classList.remove('hidden');
+      showTransient(3500);
+    });
+
+    showScreen('title-screen');
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    setInterval(() => {
+      const sd = $('score-display');
+      const td = $('time-display');
+      if (sd) sd.textContent = fkScore;
+      if (td) td.textContent = fkTimeLeft;
+    }, 100);
+  });
+
+  if (window._startLoopWhenReady && typeof loop === 'function') {
+    window._startLoopWhenReady = false;
+    window._gameLoopStarted = true;
+    requestAnimationFrame(loop);
+  }
+})();
