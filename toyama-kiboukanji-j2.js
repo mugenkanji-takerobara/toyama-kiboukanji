@@ -1095,6 +1095,6 @@
     window._gameLoopStarted = true;
     requestAnimationFrame(loop);
   }
-})();
+
 })();
 
