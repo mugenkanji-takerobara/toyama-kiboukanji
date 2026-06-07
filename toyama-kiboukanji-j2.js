@@ -1096,16 +1096,6 @@
     requestAnimationFrame(loop);
   }
 
- 　// --- 外部デバッグ用に主要関数を公開 ---
-try{
-  window.loop = loop;
-  window.stepFall = stepFall;
-  window.draw = draw;
-  window.startFkGame = startFkGame;
-  window.resetGame = resetGame;
-  // 追加で必要なら公開する関数をここに書く
-}catch(e){}
- 
     showScreen('title-screen');
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
