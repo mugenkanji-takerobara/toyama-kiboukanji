@@ -1106,5 +1106,27 @@ try{
   // 追加で必要なら公開する関数をここに書く
 }catch(e){}
  
-})();
+    showScreen('title-screen');
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    setInterval(() => {
+      const sd = $('score-display');
+      const td = $('time-display');
+      if (sd) sd.textContent = fkScore;
+      if (td) td.textContent = fkTimeLeft;
+    }, 100);
+  });
+
+  // 外部デバッグ用に主要関数を公開（IIFE の閉じ直前に置く）
+  try{
+    window.loop = typeof loop === 'function' ? loop : undefined;
+    window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
+    window.draw = typeof draw === 'function' ? draw : undefined;
+    window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
+    window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
+  }catch(e){}
+
+})();  // ← IIFE をここで一度だけ閉じる
+
 
