@@ -1077,7 +1077,7 @@
       $('mirageDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
-      if (window._startLoopWhenReady && typeof loop === 'function') {
+        if (window._startLoopWhenReady && typeof loop === 'function') {
     window._startLoopWhenReady = false;
     window._gameLoopStarted = true;
     requestAnimationFrame(loop);
@@ -1092,4 +1092,4 @@
     window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
   } catch (e) {}
 
-})();   // ← これが最後に1回だけ
+})();  // ← これが最後に1回だけ
