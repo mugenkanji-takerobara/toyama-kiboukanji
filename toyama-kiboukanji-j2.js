@@ -1077,21 +1077,19 @@
       $('mirageDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
- 
-  if (window._startLoopWhenReady && typeof loop === 'function') {
+      if (window._startLoopWhenReady && typeof loop === 'function') {
     window._startLoopWhenReady = false;
     window._gameLoopStarted = true;
     requestAnimationFrame(loop);
   }
 
-  try{
+  // 外部デバッグ用に主要関数を公開（IIFE の閉じ直前）
+  try {
     window.loop = typeof loop === 'function' ? loop : undefined;
     window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
     window.draw = typeof draw === 'function' ? draw : undefined;
     window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
     window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
-  }catch(e){}
+  } catch (e) {}
 
-})();  // ← IIFE をここで一度だけ閉じる
-
-
+})();   // ← これが最後に1回だけ
