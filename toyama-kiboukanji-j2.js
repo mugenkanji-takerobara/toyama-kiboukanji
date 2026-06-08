@@ -1077,13 +1077,12 @@
       $('mirageDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
-        if (window._startLoopWhenReady && typeof loop === 'function') {
+      if (window._startLoopWhenReady && typeof loop === 'function') {
     window._startLoopWhenReady = false;
     window._gameLoopStarted = true;
     requestAnimationFrame(loop);
   }
 
-  // 外部デバッグ用に主要関数を公開（IIFE の閉じ直前）
   try {
     window.loop = typeof loop === 'function' ? loop : undefined;
     window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
