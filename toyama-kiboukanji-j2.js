@@ -1077,38 +1077,13 @@
       $('mirageDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
-
-    showScreen('title-screen');
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    setInterval(() => {
-      const sd = $('score-display');
-      const td = $('time-display');
-      if (sd) sd.textContent = fkScore;
-      if (td) td.textContent = fkTimeLeft;
-    }, 100);
-  });
-
+ 
   if (window._startLoopWhenReady && typeof loop === 'function') {
     window._startLoopWhenReady = false;
     window._gameLoopStarted = true;
     requestAnimationFrame(loop);
   }
 
-    showScreen('title-screen');
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    setInterval(() => {
-      const sd = $('score-display');
-      const td = $('time-display');
-      if (sd) sd.textContent = fkScore;
-      if (td) td.textContent = fkTimeLeft;
-    }, 100);
-  });
-
-  // 外部デバッグ用に主要関数を公開（IIFE の閉じ直前に置く）
   try{
     window.loop = typeof loop === 'function' ? loop : undefined;
     window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
