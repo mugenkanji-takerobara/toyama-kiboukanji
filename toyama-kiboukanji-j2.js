@@ -1090,5 +1090,7 @@
     window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
     window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
   } catch (e) {}
+}
+)
 
 })();  // ← これが最後に1回だけ
