@@ -1037,6 +1037,13 @@ if (c) {
         if (waveBGM) waveBGM.currentTime = 0;
       } catch (e) {}
     });
+　　// --- REPLAY（ゲーム再スタート） ---
+$('restartBtn')?.addEventListener('click', () => {
+  $('restartBtn')?.classList.add('hidden');  // ボタンを隠す
+  resetGame();                               // 盤面リセット
+  startFkGame();                             // 新しいゲーム開始
+  gameOver = false;                          // ゲームオーバー解除
+});
 
     $('story-next')?.addEventListener('click', () => {
       if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
