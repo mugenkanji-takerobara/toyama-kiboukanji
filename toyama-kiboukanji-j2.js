@@ -1083,13 +1083,12 @@
     requestAnimationFrame(loop);
   }
 
-   try {
-   window.loop = typeof loop === 'function' ? loop : undefined;
-   window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
-   window.draw = typeof draw === 'function' ? draw : undefined;
-   window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
-   window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
-   } catch (e) {}
-   });
-1094: })();  // ← これが最後に1回だけ
-1095:
+    try {
+    window.loop = typeof loop === 'function' ? loop : undefined;
+    window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
+    window.draw = typeof draw === 'function' ? draw : undefined;
+    window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
+    window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
+  } catch (e) {}
+  });
+  })();  // ← これが最後に1回だけ
