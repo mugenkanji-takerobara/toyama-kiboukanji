@@ -959,45 +959,38 @@
       }
     }
 
-    $('start-button')?.addEventListener('click', () => {
-      console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
-　try {
-  if (typeof startFkGame === 'function') startFkGame();
-  if (typeof resetGame === 'function') resetGame();
-} catch(e) { console.error('start/init error', e); }
+   $('start-button')?.addEventListener('click', () => {
+  console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
 
-if (!window._gameLoopStarted) {
+  // 既にループが始まっていたら何もしない（重複起動防止）
+  if (window._gameLoopStarted) return;
+
+  // 画面切替（先に画面を切り替えてから音や初期化を行う）
+  showScreen('game-screen');
+
+  // BGM はユーザー操作直後に再生（ブラウザの自動再生制限対策）
+  try { safePlay && safePlay(waveBGM); } catch (e) { console.warn('safePlay failed', e); }
+
+  // ゲーム固有の初期化（存在すれば一度だけ呼ぶ）
+  try {
+    if (typeof startFkGame === 'function') startFkGame();
+    if (typeof resetGame === 'function') resetGame();
+  } catch (e) {
+    console.error('start/init error', e);
+  }
+
+  // フラグを立ててループを開始
   window._gameLoopStarted = true;
   window.started = true;
-  if (typeof loop === 'function') requestAnimationFrame(loop);
-}
 
-      if (window._gameLoopStarted) return;
-
-      showScreen('game-screen');
-
-      try {
-        safePlay(waveBGM);
-      } catch (e) {}
-
-      try {
-        if (typeof startFkGame === 'function') startFkGame();
-        if (typeof resetGame === 'function') resetGame();
-      } catch (e) {
-        console.error(e);
-      }
-
-      window._gameLoopStarted = true;
-      window.started = true;
-
-      if (typeof loop === 'function') {
-        console.log('Starting loop now');
-        requestAnimationFrame(loop);
-      } else {
-        console.warn('loop is not defined yet; will start when loop is defined');
-        window._startLoopWhenReady = true;
-      }
-    });
+  if (typeof loop === 'function') {
+    console.log('Starting loop now');
+    requestAnimationFrame(loop);
+  } else {
+    console.warn('loop is not defined yet; will start when loop is defined');
+    window._startLoopWhenReady = true;
+  }
+});
 
     $('manual-button')?.addEventListener('click', () => {
       $('manualOverlay')?.classList.remove('hidden');
