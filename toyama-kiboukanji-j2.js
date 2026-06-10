@@ -420,7 +420,7 @@
       sy += 16;
     }
     ctx.font = '10px sans-serif';
-    ctx.fillText('Game concept by T.Shiob', 190, sy + 10);
+    ctx.fillText('Game designed by Team shiob', 190, sy + 10);
     ctx.restore();
   }
 
