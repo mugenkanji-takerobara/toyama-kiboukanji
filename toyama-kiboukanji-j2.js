@@ -1039,10 +1039,10 @@ if (c) {
     });
 　　// --- REPLAY（ゲーム再スタート） ---
 $('restartBtn')?.addEventListener('click', () => {
-  $('restartBtn')?.classList.add('hidden');  // ボタンを隠す
-  resetGame();                               // 盤面リセット
-  startFkGame();                             // 新しいゲーム開始
-  gameOver = false;                          // ゲームオーバー解除
+  $('restartBtn')?.classList.add('hidden');
+  gameOver = false;        // ★これが最重要
+  resetGame();
+  startFkGame();
 });
 
     $('story-next')?.addEventListener('click', () => {
