@@ -970,8 +970,8 @@ if (c) {
     }
 
    $('start-button')?.addEventListener('click', () => {
-  console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
-　document.getElementById('game-screen').style.display = 'block';
+ console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
+document.getElementById('game-screen').style.display = 'block';
 
   // 既にループが始まっていたら何もしない（重複起動防止）
   if (window._gameLoopStarted) return;
