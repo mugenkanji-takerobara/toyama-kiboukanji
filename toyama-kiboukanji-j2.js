@@ -1083,13 +1083,13 @@
     requestAnimationFrame(loop);
   }
 
- 1086:   try {
-1087:     window.loop = typeof loop === 'function' ? loop : undefined;
-1088:     window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
-1089:     window.draw = typeof draw === 'function' ? draw : undefined;
-1090:     window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
-1091:     window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
-1092:   } catch (e) {}
-1093:   });
+   try {
+   window.loop = typeof loop === 'function' ? loop : undefined;
+   window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
+   window.draw = typeof draw === 'function' ? draw : undefined;
+   window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
+   window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
+   } catch (e) {}
+   });
 1094: })();  // ← これが最後に1回だけ
 1095:
