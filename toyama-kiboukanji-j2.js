@@ -961,19 +961,17 @@
 
     $('start-button')?.addEventListener('click', () => {
       console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
-　　　　　　　// Start ボタンのハンドラ内で確実に呼ぶ（既存の start-button ハンドラの中に入れる）
-try {
+　try {
   if (typeof startFkGame === 'function') startFkGame();
   if (typeof resetGame === 'function') resetGame();
-} catch(e){ console.error('start/init error', e); }
+} catch(e) { console.error('start/init error', e); }
 
-// ループ開始の保険
 if (!window._gameLoopStarted) {
   window._gameLoopStarted = true;
   window.started = true;
   if (typeof loop === 'function') requestAnimationFrame(loop);
 }
-  
+
       if (window._gameLoopStarted) return;
 
       showScreen('game-screen');
