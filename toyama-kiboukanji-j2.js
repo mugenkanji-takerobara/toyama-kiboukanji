@@ -1,6 +1,8 @@
 // toyama-kiboukanji-j2.js - 統合・構文チェック済み（安全版）
 
 (() => {
+  let scoreRanking = [];  // {score, time} の配列にする例
+
   const $ = id => document.getElementById(id);
 
   // --- 基本データ ---
