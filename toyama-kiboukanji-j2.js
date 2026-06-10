@@ -943,6 +943,16 @@
           selectedCell = { x, y };
         }
       });
+　　　// ★ Canvas を必ず表示させる（最重要）
+const c = document.getElementById('game-canvas') || document.querySelector('canvas');
+if (c) {
+  c.style.display = 'block';
+  c.style.width = '100%';
+  c.style.height = '600px';   // ← とりあえず固定でOK（後で調整）
+  c.width = c.clientWidth;
+  c.height = c.clientHeight;
+  console.log('Canvas forced visible:', c.clientWidth, c.clientHeight);
+}
 
       canvas.addEventListener('touchstart', e => {
         if (e.touches && e.touches[0]) {
