@@ -968,29 +968,33 @@ if (c) {
         console.error('wireTouchHandlers error', e);
       }
     }
+　　　　$('start-button')?.addEventListener('click', () => {
+  console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
 
-   $('start-button')?.addEventListener('click', () => {
- console.log('Start clicked, _gameLoopStarted:', !!window._gameLoopStarted);
-document.getElementById('game-screen').style.display = 'block';
-
-  // 既にループが始まっていたら何もしない（重複起動防止）
-  if (window._gameLoopStarted) return;
-
-  // 画面切替（先に画面を切り替えてから音や初期化を行う）
+  // ★ 1) 最初に showScreen を呼ぶ（これが最重要）
   showScreen('game-screen');
 
-  // BGM はユーザー操作直後に再生（ブラウザの自動再生制限対策）
-  try { safePlay && safePlay(waveBGM); } catch (e) { console.warn('safePlay failed', e); }
+  // ★ 2) 念のため直接 display:block も付ける
+  const gs = document.getElementById('game-screen');
+  if (gs) {
+    gs.style.display = 'block';
+    gs.style.visibility = 'visible';
+    gs.style.minHeight = '100vh';
+  }
 
-  // ゲーム固有の初期化（存在すれば一度だけ呼ぶ）
+  // 既にループが始まっていたら何もしない
+  if (window._gameLoopStarted) return;
+
+  // BGM
+  try { safePlay && safePlay(waveBGM); } catch(e){}
+
+  // ゲーム初期化
   try {
     if (typeof startFkGame === 'function') startFkGame();
     if (typeof resetGame === 'function') resetGame();
-  } catch (e) {
-    console.error('start/init error', e);
-  }
+  } catch(e){}
 
-  // フラグを立ててループを開始
+  // ループ開始
   window._gameLoopStarted = true;
   window.started = true;
 
@@ -998,7 +1002,6 @@ document.getElementById('game-screen').style.display = 'block';
     console.log('Starting loop now');
     requestAnimationFrame(loop);
   } else {
-    console.warn('loop is not defined yet; will start when loop is defined');
     window._startLoopWhenReady = true;
   }
 });
