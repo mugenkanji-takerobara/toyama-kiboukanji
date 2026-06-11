@@ -1046,7 +1046,16 @@ document.getElementById('restartBtn')?.addEventListener('click', () => {
   if (typeof startFkGame === 'function') startFkGame();
 });
 
-    $('story-next')?.addEventListener('click', () => {
+    $('story-next')?.addEventListener('click', () => {document.getElementById('start-button')?.addEventListener('click', () => {
+  showScreen('game-screen');
+  gameOver = false;
+  isPaused = false;
+  resetGame();
+  if (typeof startFkGame === 'function') startFkGame();
+  window._gameLoopStarted = true;
+  if (typeof loop === 'function') requestAnimationFrame(loop);
+});
+
       if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
     });
     $('story-prev')?.addEventListener('click', () => {
