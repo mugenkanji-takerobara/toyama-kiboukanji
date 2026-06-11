@@ -1000,7 +1000,7 @@ if (c) {
   window._gameLoopStarted = true;
   window.started = true;
 
-       if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
+      if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
     });
 
     $('story-prev')?.addEventListener('click', () => {
@@ -1064,6 +1064,32 @@ if (c) {
       showTransient(3500);
     });
 
+    // --- Start（上書き） ---
+    const startBtn = document.getElementById('start-button');
+    if (startBtn) {
+      startBtn.onclick = () => {
+        showScreen('game-screen');
+        gameOver = false;
+        isPaused = false;
+        if (typeof resetGame === 'function') resetGame();
+        if (typeof startFkGame === 'function') startFkGame();
+        window._gameLoopStarted = true;
+        if (typeof loop === 'function') requestAnimationFrame(loop);
+      };
+    }
+
+    // --- REPLAY（上書き） ---
+    const restartBtn = document.getElementById('restartBtn');
+    if (restartBtn) {
+      restartBtn.onclick = () => {
+        restartBtn.classList.add('hidden');
+        gameOver = false;
+        isPaused = false;
+        if (typeof resetGame === 'function') resetGame();
+        if (typeof startFkGame === 'function') startFkGame();
+      };
+    }
+
     if (window._startLoopWhenReady && typeof loop === 'function') {
       window._startLoopWhenReady = false;
       window._gameLoopStarted = true;
@@ -1078,5 +1104,5 @@ if (c) {
       window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
     } catch (e) {}
 
-  }); // ← ★ DOMContentLoaded の閉じ括弧
-})();   // ← ★ 即時関数の閉じ括弧
+  }); // ← DOMContentLoaded の閉じ括弧
+})();   // ← 即時関数の閉じ括弧
