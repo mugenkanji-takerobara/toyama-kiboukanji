@@ -649,7 +649,6 @@ window.next2 = next2;
   function resetBoard() {
     board = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
   }
-
   function resetGame() {
   resetBoard();
   gameScore = 0;
@@ -659,12 +658,9 @@ window.next2 = next2;
   bonusRemaining = 0;
   selectedCell = null;
 
-  // cur を確実に生成する（ここが重要）
-  // next1/next2 を先に作ってから cur に next1 を割り当てる方式
   next1 = new Piece(level === 'hard');
   next2 = new Piece(level === 'hard');
   cur = next1;
-  // 次の枠を補充（next1 を消費したので新しい next1 を作る）
   next1 = next2;
   next2 = new Piece(level === 'hard');
 
