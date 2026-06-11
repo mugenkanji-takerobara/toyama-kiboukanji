@@ -1037,12 +1037,13 @@ if (c) {
         if (waveBGM) waveBGM.currentTime = 0;
       } catch (e) {}
     });
-　　// --- REPLAY（ゲーム再スタート） ---
-$('restartBtn')?.addEventListener('click', () => {
-  $('restartBtn')?.classList.add('hidden');
-  gameOver = false;        // ★これが最重要
+　// --- REPLAY（ゲーム再スタート） ---
+document.getElementById('restartBtn')?.addEventListener('click', () => {
+  document.getElementById('restartBtn')?.classList.add('hidden');
+  gameOver = false;
+  isPaused = false;
   resetGame();
-  startFkGame();
+  if (typeof startFkGame === 'function') startFkGame();
 });
 
     $('story-next')?.addEventListener('click', () => {
