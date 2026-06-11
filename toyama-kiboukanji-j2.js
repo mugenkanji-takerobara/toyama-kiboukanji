@@ -17,7 +17,12 @@
   let shamisenIntro = null;
   let bgmNormal = null;
   let bgmBonus = null;
-
+　// ★ オーディオもグローバル露出
+window.waveBGM = waveBGM;
+window.storyBGM = storyBGM;
+window.shamisenIntro = shamisenIntro;
+window.bgmNormal = bgmNormal;
+window.bgmBonus = bgmBonus;
   // 外部で本物が定義されるまでのプレースホルダ
   function wireTouchHandlers() { return; }
 
