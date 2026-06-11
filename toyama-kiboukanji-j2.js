@@ -1000,74 +1000,9 @@ if (c) {
   window._gameLoopStarted = true;
   window.started = true;
 
-  if (typeof loop === 'function') {
-    console.log('Starting loop now');
-    requestAnimationFrame(loop);
-  } else {
-    window._startLoopWhenReady = true;
-  }
-});
-
-    $('manual-button')?.addEventListener('click', () => {
-      $('manualOverlay')?.classList.remove('hidden');
-      if (typeof loadManualPage === 'function') {
-        loadManualPage(0);
-      }
-    });
-    $('manual-next')?.addEventListener('click', () => {
-      if (typeof loadManualPage === 'function' && typeof currentManualPage !== 'undefined') {
-     loadManualPage(currentManualPage + 1);
-      }
-    });
-    $('manual-prev')?.addEventListener('click', () => {
-      if (typeof loadManualPage === 'function' && typeof currentManualPage !== 'undefined') {
-        loadManualPage(currentManualPage - 1);
-      }
-    });
-    $('close-manual')?.addEventListener('click', () => {
-      $('manualOverlay')?.classList.add('hidden');
+       if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
     });
 
-    $('toyama-button')?.addEventListener('click', () => showScreen('toyamaScreen'));
-    $('back-to-game')?.addEventListener('click', () => showScreen('game-screen'));
-    $('back-to-title')?.addEventListener('click', () => {
-      showScreen('title-screen');
-      try {
-        waveBGM?.pause();
-        if (waveBGM) waveBGM.currentTime = 0;
-      } catch (e) {}
-    });
-
-// --- Start（上書き） ---
-const startBtn = document.getElementById('start-button');
-if (startBtn) {
-  startBtn.onclick = () => {
-    showScreen('game-screen');
-    gameOver = false;
-    isPaused = false;
-    // ★ 先にリセットしてから開始
-    if (typeof resetGame === 'function') resetGame();
-    if (typeof startFkGame === 'function') startFkGame();
-    window._gameLoopStarted = true;
-    if (typeof loop === 'function') requestAnimationFrame(loop);
-  };
-}
-
-// --- REPLAY（上書き） ---
-const restartBtn = document.getElementById('restartBtn');
-if (restartBtn) {
-  restartBtn.onclick = () => {
-    restartBtn.classList.add('hidden');
-    gameOver = false;
-    isPaused = false;
-    // ★ gameOver を false にしてからリセット→開始
-    if (typeof resetGame === 'function') resetGame();
-    if (typeof startFkGame === 'function') startFkGame();
-  };
-}
-
-      if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
-    });
     $('story-prev')?.addEventListener('click', () => {
       if (typeof updateStoryBGM === 'function') updateStoryBGM(0);
     });
@@ -1079,7 +1014,8 @@ if (restartBtn) {
     });
 
     setTimeout(() => showTransient(5000), 2000);
-     setInterval(() => showTransient(4000 + Math.floor(Math.random() * 3000)), 30000);
+    setInterval(() => showTransient(4000 + Math.floor(Math.random() * 3000)), 30000);
+
     ['click', 'touchstart', 'mousemove'].forEach(ev =>
       window.addEventListener(ev, () => showTransient(5000), { passive: true })
     );
@@ -1090,6 +1026,7 @@ if (restartBtn) {
       sd.style.display = 'none';
       document.body.appendChild(sd);
     }
+
     if (!$('time-display')) {
       const td = document.createElement('div');
       td.id = 'time-display';
@@ -1102,38 +1039,44 @@ if (restartBtn) {
       $('iwaseDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
+
     $('yaoSpotBtn')?.addEventListener('click', () => {
       $('toyamaScreen')?.classList.add('hidden');
       $('yaoDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
+
     $('sciSpotBtn')?.addEventListener('click', () => {
       $('toyamaScreen')?.classList.add('hidden');
       $('sciDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
+
     $('toyamajoSpotBtn')?.addEventListener('click', () => {
       $('toyamaScreen')?.classList.add('hidden');
       $('toyamajoDetailScreen')?.classList.remove('hidden');
-        showTransient(3500);
+      showTransient(3500);
     });
+
     $('mirageSpotBtn')?.addEventListener('click', () => {
       $('toyamaScreen')?.classList.add('hidden');
       $('mirageDetailScreen')?.classList.remove('hidden');
       showTransient(3500);
     });
-      if (window._startLoopWhenReady && typeof loop === 'function') {
-    window._startLoopWhenReady = false;
-    window._gameLoopStarted = true;
-    requestAnimationFrame(loop);
-  }
+
+    if (window._startLoopWhenReady && typeof loop === 'function') {
+      window._startLoopWhenReady = false;
+      window._gameLoopStarted = true;
+      requestAnimationFrame(loop);
+    }
 
     try {
-    window.loop = typeof loop === 'function' ? loop : undefined;
-    window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
-    window.draw = typeof draw === 'function' ? draw : undefined;
-    window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
-    window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
-  } catch (e) {}
-  });
-  })();  // ← これが最後に1回だけ
+      window.loop = typeof loop === 'function' ? loop : undefined;
+      window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
+      window.draw = typeof draw === 'function' ? draw : undefined;
+      window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
+      window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
+    } catch (e) {}
+
+  }); // ← ★ DOMContentLoaded の閉じ括弧
+})();   // ← ★ 即時関数の閉じ括弧
