@@ -269,6 +269,15 @@ window.isPaused = isPaused;
 window.next1 = next1;
 window.next2 = next2;
 
+// ★ グローバル露出（IIFE 内に置くこと）
+window.board = board;
+window.cur = cur;
+window.gameOver = gameOver;
+window.isPaused = isPaused;
+window.next1 = next1;
+window.next2 = next2;
+
+
   class Piece {
     constructor(isPair = false) {
       if (isPair) {
