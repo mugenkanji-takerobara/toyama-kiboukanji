@@ -17,12 +17,29 @@
   let shamisenIntro = null;
   let bgmNormal = null;
   let bgmBonus = null;
-　// ★ オーディオもグローバル露出
-window.waveBGM = waveBGM;
-window.storyBGM = storyBGM;
-window.shamisenIntro = shamisenIntro;
-window.bgmNormal = bgmNormal;
-window.bgmBonus = bgmBonus;
+  // ★ オーディオ安全スタブ（IIFE 内・宣言直後に1回だけ置く）
+if (typeof window === 'object') {
+  const safeAudioStub = {
+    play: () => Promise.resolve(),
+    pause: () => {},
+    currentTime: 0,
+    loop: false,
+    volume: 0
+  };
+  // 既に値が入っていなければ安全なオブジェクトを割り当てる
+  window.waveBGM = window.waveBGM || waveBGM || safeAudioStub;
+  window.storyBGM = window.storyBGM || storyBGM || safeAudioStub;
+  window.shamisenIntro = window.shamisenIntro || shamisenIntro || safeAudioStub;
+  window.bgmNormal = window.bgmNormal || bgmNormal || safeAudioStub;
+  window.bgmBonus = window.bgmBonus || bgmBonus || safeAudioStub;
+  // ローカル変数にも反映（既存コードがローカルを参照する場合の保険）
+  waveBGM = waveBGM || window.waveBGM;
+  storyBGM = storyBGM || window.storyBGM;
+  shamisenIntro = shamisenIntro || window.shamisenIntro;
+  bgmNormal = bgmNormal || window.bgmNormal;
+  bgmBonus = bgmBonus || window.bgmBonus;
+}
+
   // 外部で本物が定義されるまでのプレースホルダ
   function wireTouchHandlers() { return; }
 
