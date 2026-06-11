@@ -253,6 +253,14 @@
   let next2 = null;
   let level = 'easy';
   let isPaused = false;
+  // ★ グローバル露出（IIFE 内に置くこと）
+window.board = board;
+window.cur = cur;
+window.gameOver = gameOver;
+window.isPaused = isPaused;
+window.next1 = next1;
+window.next2 = next2;
+
 　// ★ グローバル露出（Console で undefined を防ぐ）
 window.board = board;
 window.cur = cur;
