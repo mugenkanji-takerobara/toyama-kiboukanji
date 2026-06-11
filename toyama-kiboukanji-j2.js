@@ -1037,24 +1037,31 @@ if (c) {
         if (waveBGM) waveBGM.currentTime = 0;
       } catch (e) {}
     });
-　// --- REPLAY（ゲーム再スタート） ---
-document.getElementById('restartBtn')?.addEventListener('click', () => {
-  document.getElementById('restartBtn')?.classList.add('hidden');
-  gameOver = false;
-  isPaused = false;
-  resetGame();
-  if (typeof startFkGame === 'function') startFkGame();
-});
+// Start（上書き）
+const startBtn = document.getElementById('start-button');
+if (startBtn) {
+  startBtn.onclick = () => {
+    showScreen('game-screen');
+    gameOver = false;
+    isPaused = false;
+    resetGame();
+    if (typeof startFkGame === 'function') startFkGame();
+    window._gameLoopStarted = true;
+    if (typeof loop === 'function') requestAnimationFrame(loop);
+  };
+}
 
-    $('story-next')?.addEventListener('click', () => {document.getElementById('start-button')?.addEventListener('click', () => {
-  showScreen('game-screen');
-  gameOver = false;
-  isPaused = false;
-  resetGame();
-  if (typeof startFkGame === 'function') startFkGame();
-  window._gameLoopStarted = true;
-  if (typeof loop === 'function') requestAnimationFrame(loop);
-});
+// REPLAY（上書き）
+const restartBtn = document.getElementById('restartBtn');
+if (restartBtn) {
+  restartBtn.onclick = () => {
+    restartBtn.classList.add('hidden');
+    gameOver = false;
+    isPaused = false;
+    resetGame();
+    if (typeof startFkGame === 'function') startFkGame();
+  };
+}
 
       if (typeof updateStoryBGM === 'function') updateStoryBGM(1);
     });
