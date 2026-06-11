@@ -1037,28 +1037,31 @@ if (c) {
         if (waveBGM) waveBGM.currentTime = 0;
       } catch (e) {}
     });
-// Start（上書き）
+
+// --- Start（上書き） ---
 const startBtn = document.getElementById('start-button');
 if (startBtn) {
   startBtn.onclick = () => {
     showScreen('game-screen');
     gameOver = false;
     isPaused = false;
-    resetGame();
+    // ★ 先にリセットしてから開始
+    if (typeof resetGame === 'function') resetGame();
     if (typeof startFkGame === 'function') startFkGame();
     window._gameLoopStarted = true;
     if (typeof loop === 'function') requestAnimationFrame(loop);
   };
 }
 
-// REPLAY（上書き）
+// --- REPLAY（上書き） ---
 const restartBtn = document.getElementById('restartBtn');
 if (restartBtn) {
   restartBtn.onclick = () => {
     restartBtn.classList.add('hidden');
     gameOver = false;
     isPaused = false;
-    resetGame();
+    // ★ gameOver を false にしてからリセット→開始
+    if (typeof resetGame === 'function') resetGame();
     if (typeof startFkGame === 'function') startFkGame();
   };
 }
