@@ -1128,19 +1128,17 @@ if (c) {
       requestAnimationFrame(loop);
     }
 　　// --- 安全にボタンへイベントを結びつける（重複チェックあり） ---
+　　// --- 最終ブロック（ここをファイル末尾に置き換える） ---
 try {
   const bindIf = (id, fn) => {
     const el = document.getElementById(id);
     if (!el) return;
-    // 既に addEventListener で同じ関数が付いていないか簡易チェック
-    // （同じ関数を複数回付けても大きな問題はないが見た目で重複を避ける）
     const has = (el._boundHandlers || []).includes(fn);
     if (!has) {
       el.addEventListener('click', fn);
       el._boundHandlers = (el._boundHandlers || []).concat(fn);
       console.log('bound', id);
     }
-    // もし inline onclick が残っているなら上書きしておく（安全策）
     if (el.getAttribute && el.getAttribute('onclick')) {
       try { el.removeAttribute('onclick'); } catch(e){}
     }
@@ -1151,15 +1149,15 @@ try {
   bindIf('toyama-amaharashi', typeof showAmahara === 'function' ? showAmahara : () => console.warn('showAmahara missing'));
   bindIf('amaharashiStoryBtn', typeof showAmahara === 'function' ? showAmahara : () => console.warn('showAmahara missing'));
 
-  // グローバルにも確実に公開（念のため）
+  // グローバルにも公開（念のため）
   try {
-    window.showScreen = showScreen;
-    window.showHowto = showHowto;
-    window.showToyama = showToyama;
-    window.showAmahara = showAmahara;
-  } catch(e){}
+    window.showScreen = typeof showScreen === 'function' ? showScreen : undefined;
+    window.showHowto = typeof showHowto === 'function' ? showHowto : undefined;
+    window.showToyama = typeof showToyama === 'function' ? showToyama : undefined;
+    window.showAmahara = typeof showAmahara === 'function' ? showAmahara : undefined;
+  } catch(e){ console.error('expose funcs error', e); }
 
-  // REPLAY と戻るを隠す（既にやっているなら安全にスキップ）
+  // REPLAY と戻るを隠す（安全に）
   ['restartBtn','back-to-game','globalBack'].forEach(id=>{
     const el = document.getElementById(id);
     if(el) el.style.display = 'none';
@@ -1168,9 +1166,7 @@ try {
 } catch(e){
   console.error('bind buttons error', e);
 }
-document.getElementById('restartBtn').style.display = 'none';
-document.getElementById('back-to-game').style.display = 'none';
-document.getElementById('globalBack').style.display = 'none';
 
-  }); // ← DOMContentLoaded の閉じ括弧
-})();   // ← 即時関数の閉じ括弧
+// 末尾の閉じを必ず入れる
+}); // ← DOMContentLoaded の閉じ括弧
+})(); // ← 即時関数の閉じ括弧
