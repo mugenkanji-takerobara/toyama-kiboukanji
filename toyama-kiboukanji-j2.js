@@ -1135,6 +1135,23 @@ if (c) {
       window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
       window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
     } catch (e) {}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
+  const el = document.getElementById(id);
+  if(el) el.style.display='block';
+}
+
+function showHowto(){
+  showScreen('howto-screen');
+}
+
+function showToyama(){
+  showScreen('toyama-screen');
+}
+
+function showAmahara(){
+  showScreen('amaharashi-screen');
+}
 
   }); // ← DOMContentLoaded の閉じ括弧
 })();   // ← 即時関数の閉じ括弧
