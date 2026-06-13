@@ -1142,7 +1142,7 @@ function showScreen(id){
 }
 
 function showHowto(){
-  showScreen('howto-screen');
+  showScreen('manualOverlay');
 }
 
 function showToyama(){
@@ -1151,12 +1151,8 @@ function showToyama(){
 
 function showAmahara(){
   showScreen('amaharashi-screen');
-  try{
-    const a = new Audio('audio/shamisen_intro.mp3');
-    a.volume = 0.5;
-    a.play();
-  }catch(e){}
 }
+
 document.getElementById('restartBtn').style.display = 'none';
 document.getElementById('back-to-game').style.display = 'none';
 document.getElementById('globalBack').style.display = 'none';
