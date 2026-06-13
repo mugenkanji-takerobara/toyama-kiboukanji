@@ -1151,6 +1151,11 @@ function showToyama(){
 
 function showAmahara(){
   showScreen('amaharashi-screen');
+  try{
+    const a = new Audio('audio/shamisen_intro.mp3');
+    a.volume = 0.5;
+    a.play();
+  }catch(e){}
 }
 
   }); // ← DOMContentLoaded の閉じ括弧
