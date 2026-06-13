@@ -1127,42 +1127,44 @@ if (c) {
       window._gameLoopStarted = true;
       requestAnimationFrame(loop);
     }
-
-    try {
-      window.loop = typeof loop === 'function' ? loop : undefined;
-      window.stepFall = typeof stepFall === 'function' ? stepFall : undefined;
-      window.draw = typeof draw === 'function' ? draw : undefined;
-      window.startFkGame = typeof startFkGame === 'function' ? startFkGame : undefined;
-      window.resetGame = typeof resetGame === 'function' ? resetGame : undefined;
-    } catch (e) {}
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
-  const el = document.getElementById(id);
-  if(el) el.style.display='block';
-}
-
-function showHowto(){
-  showScreen('manualOverlay');
-}
-
-function showToyama(){
-  showScreen('toyama-screen');
-}
-
-function showAmahara(){
-  showScreen('amaharashi-screen');
-}
-// Inline onclick から呼ばれるのでグローバルに公開する
+　　// --- 安全にボタンへイベントを結びつける（重複チェックあり） ---
 try {
-  window.showScreen = showScreen;
-  window.showHowto = showHowto;
-  window.showToyama = showToyama;
-  window.showAmahara = showAmahara;
-} catch(e) { console.error('expose funcs error', e); }
+  const bindIf = (id, fn) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    // 既に addEventListener で同じ関数が付いていないか簡易チェック
+    // （同じ関数を複数回付けても大きな問題はないが見た目で重複を避ける）
+    const has = (el._boundHandlers || []).includes(fn);
+    if (!has) {
+      el.addEventListener('click', fn);
+      el._boundHandlers = (el._boundHandlers || []).concat(fn);
+      console.log('bound', id);
+    }
+    // もし inline onclick が残っているなら上書きしておく（安全策）
+    if (el.getAttribute && el.getAttribute('onclick')) {
+      try { el.removeAttribute('onclick'); } catch(e){}
+    }
+  };
 
-document.getElementById('restartBtn').style.display = 'none';
-document.getElementById('back-to-game').style.display = 'none';
-document.getElementById('globalBack').style.display = 'none';
+  bindIf('manual-button', typeof showHowto === 'function' ? showHowto : () => console.warn('showHowto missing'));
+  bindIf('toyama-button', typeof showToyama === 'function' ? showToyama : () => console.warn('showToyama missing'));
+  bindIf('toyama-amaharashi', typeof showAmahara === 'function' ? showAmahara : () => console.warn('showAmahara missing'));
+  bindIf('amaharashiStoryBtn', typeof showAmahara === 'function' ? showAmahara : () => console.warn('showAmahara missing'));
 
-  }); // ← DOMContentLoaded の閉じ括弧
-})();   // ← 即時関数の閉じ括弧
+  // グローバルにも確実に公開（念のため）
+  try {
+    window.showScreen = showScreen;
+    window.showHowto = showHowto;
+    window.showToyama = showToyama;
+    window.showAmahara = showAmahara;
+  } catch(e){}
+
+  // REPLAY と戻るを隠す（既にやっているなら安全にスキップ）
+  ['restartBtn','back-to-game','globalBack'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+
+} catch(e){
+  console.error('bind buttons error', e);
+}
