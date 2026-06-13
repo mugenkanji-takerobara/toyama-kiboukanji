@@ -1152,6 +1152,13 @@ function showToyama(){
 function showAmahara(){
   showScreen('amaharashi-screen');
 }
+// Inline onclick から呼ばれるのでグローバルに公開する
+try {
+  window.showScreen = showScreen;
+  window.showHowto = showHowto;
+  window.showToyama = showToyama;
+  window.showAmahara = showAmahara;
+} catch(e) { console.error('expose funcs error', e); }
 
 document.getElementById('restartBtn').style.display = 'none';
 document.getElementById('back-to-game').style.display = 'none';
