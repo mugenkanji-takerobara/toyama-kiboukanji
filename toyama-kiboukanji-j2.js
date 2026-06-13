@@ -1168,3 +1168,9 @@ try {
 } catch(e){
   console.error('bind buttons error', e);
 }
+document.getElementById('restartBtn').style.display = 'none';
+document.getElementById('back-to-game').style.display = 'none';
+document.getElementById('globalBack').style.display = 'none';
+
+  }); // ← DOMContentLoaded の閉じ括弧
+})();   // ← 即時関数の閉じ括弧
